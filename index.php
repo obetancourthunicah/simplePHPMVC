@@ -14,40 +14,18 @@
     //Siempre
     require_once("controllers/verificar.mw.php");
     require_once("controllers/site.mw.php");
-    //Este switch se encarga de todo el enrutamiento
 
+
+    //Este switch se encarga de todo el enrutamiento
     switch($pageRequest){
         case "home":
             //llamar al controlador
             require_once("controllers/home.control.php");
             break;
-        case "login":
-            require_once("controllers/login.control.php");
-            break;
-        case "registro":
-            require_once("controllers/registro.control.php");
-            break;
-        case "althome":
-            require_once("controllers/althome.control.php");
-            break;
-        case "formulario":
-            require_once("controllers/formulario.control.php");
-            break;
-        case "mensajes":
-            require_once("controllers/mensajes.control.php");
-            break;
-        case "mensajeform":
-            require_once("controllers/mensajesform.control.php");
-            break;
-        case "workwith":
-            require_once("controllers/workwith.control.php");
-            break;
-        case "workwithform":
-            require_once("controllers/workwithform.control.php");
-            break;
-
+        case "prdbacklog":
+        require_once("controllers/prdbacklog.control.php");
+        break;
         default:
             require_once("controllers/error.control.php");
-
     }
 ?>

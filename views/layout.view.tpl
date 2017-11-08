@@ -8,7 +8,7 @@
             <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-            <link rel="stylesheet" href="public/css/estilo1.css" />
+            <link rel="stylesheet" href="public/css/estilo.css" />
             {{foreach css_ref}}
                 <link rel="stylesheet" href="{{uri}}" />
             {{endfor css_ref}}
@@ -17,10 +17,7 @@
             <div class="menu">
                 <ul>
                     <li><a href="index.php?page=home">Home</a></li>
-                    <li><a href="index.php?page=workwith">Work With Pattern</a></li>
-                    <li class="title"><b>{{page_title}}</b></li>
-                    <li><a href="index.php?page=patterns">Patrones de Negocio</a></li>
-                    <li><a href="">y Ahora qué</a></li>
+                    <li><a href="index.php?page=prdbacklog">Backlog</a></li>
                 </ul>
             </div>
             <div class="contenido">
