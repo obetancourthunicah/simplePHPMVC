@@ -20,9 +20,13 @@
         <th>Nombre</th>
         <th class="sd-hide">Tipo</th>
         <th class="sd-hide">Estado</th>
-        <th><a href="index.php?page=user&usrcod=0&mode=INS" class="btn depth-1 s-margin">
+        <th>
+          {{if canNew}}
+          <a href="index.php?page=user&usrcod=0&mode=INS" class="btn depth-1 s-margin">
           <span class="ion-plus-circled"></span>
-          </a></th>
+          </a>
+          {{endif canNew}}
+        </th>
       </tr>
     </thead>
     <tbody class="zebra">
@@ -33,7 +37,9 @@
         <td class="sd-hide">{{usertipo}}</td>
         <td class="sd-hide">{{userest}}</td>
         <td class="center">
+          {{if ~canEdit}}
           <a href="index.php?page=user&usrcod={{usercod}}&mode=UPD" class="btn depth-1 s-margin"><span class="ion-edit"></span></a>
+          {{endif ~canEdit}}
           <a href="index.php?page=user&usrcod={{usercod}}&mode=DSP" class="btn depth-1 s-margin"><span class="ion-eye"></span></a>
         </td>
       </tr>

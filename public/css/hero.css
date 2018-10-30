@@ -46,4 +46,26 @@
   padding:1em;
   border: 1px solid #555;
   margin:2.5%;
+  box-shadow: 1px 1px 3px #000;
+}
+
+@media (min-width:700px){
+    .heropanel{
+      background-image: url('../imgs/hpt.jpg');
+      min-height: 60vh;
+    }
+    .cards>div{
+      width: 30%;
+      margin:1.5%;
+    }
+}
+
+@media (min-width: 1200px){
+  .heropanel{
+    background-image: url('../imgs/hpd.jpg');
+  }
+  .cards>div{
+    width: 22.5%;
+    margin:1%;
+  }
 }

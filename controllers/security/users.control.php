@@ -23,6 +23,10 @@ function run(){
     }
     $data["fltEmail"] = $filter;
     $data["usuarios"] = obtenerUsuarioPorFiltro($filter,'%');
+    $data["canEdit"] = isAuthorized('users_UPD', $_SESSION["userCode"]);
+    $data["canNew"] = isAuthorized('users_INS', $_SESSION["userCode"]);
+
+
     renderizar("security/users", $data );
 }
 

@@ -113,17 +113,17 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
                     $currentContext = str_replace("~", "", $currentContext);
                     foreach ($root[$currentContext] as $forcontext) {
                         $renderedHTML .= renderTemplate(
-                            $innerBlock, 
+                            $innerBlock,
                             $forcontext,
                             $context,
                             $root
                         );
-                    } 
+                    }
                 } elseif (strpos($currentContext, "&") !== false) {
                     $currentContext = str_replace("&", "", $currentContext);
                     foreach ($parent[$currentContext] as $forcontext) {
                         $renderedHTML .= renderTemplate(
-                            $innerBlock, 
+                            $innerBlock,
                             $forcontext,
                             $context,
                             $root
@@ -133,7 +133,7 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
                     if (isset($context[$currentContext]) ) {
                         foreach ($context[$currentContext] as $forcontext) {
                             $renderedHTML .= renderTemplate(
-                                $innerBlock, 
+                                $innerBlock,
                                 $forcontext,
                                 $context,
                                 $root
@@ -141,7 +141,7 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
                         }
                     }
                 }
-                 
+
                 $innerBlock = array();
                 $currentContext = "";
                 continue;
@@ -196,9 +196,32 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
                 $currentContext = trim(
                     str_replace("}}", "", str_replace("{{ifnot", "", $node))
                 );
-                if (isset($context[$currentContext]) ) {
-                    $ifNotCondition = ($context[$currentContext]) == false;
+                $tindex = $currentContext;
+                $titem = false;
+                if (strpos($tindex, "~") !== false) {
+                    $tindex = str_replace("~", "", $tindex);
+                    if ($tindex === "this" && !(is_array($root)) ) {
+                        $titem = $root;
+                    } else {
+                        $titem = isset($root[$tindex])?$root[$tindex]:false;
+                    }
+                } elseif (strpos($tindex, "&") !== false) {
+                    $tindex = str_replace("&", "", $tindex);
+                    if ($tindex === "this" && !(is_array($parent)) ) {
+                        $titem = $tparent;
+                    } else {
+                        $titem = isset($parent[$tindex])?$parent[$tindex]:false;
+                    }
+                } else {
+                    if ($tindex === "this" && !(is_array($context)) ) {
+                        $titem = $context;
+                    } else {
+                        $titem = isset($context[$tindex])?$context[$tindex]:false;
+                    }
                 }
+                $ifNotCondition = ($titem) == false;
+                $titem = array();
+                $tindex = "";
                 continue;
             }
         }
@@ -209,9 +232,34 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
                 $currentContext = trim(
                     str_replace("}}", "", str_replace("{{if", "", $node))
                 );
-                if (isset($context[$currentContext]) ) {
-                    $ifCondition = ($context[$currentContext]) && true;
+
+                $tindex = $currentContext;
+                $titem = false;
+                if (strpos($tindex, "~") !== false) {
+                    $tindex = str_replace("~", "", $tindex);
+                    if ($tindex === "this" && !(is_array($root)) ) {
+                        $titem = $root;
+                    } else {
+                        $titem = isset($root[$tindex])?$root[$tindex]:false;
+                    }
+                } elseif (strpos($tindex, "&") !== false) {
+                    $tindex = str_replace("&", "", $tindex);
+                    if ($tindex === "this" && !(is_array($parent)) ) {
+                        $titem = $tparent;
+                    } else {
+                        $titem = isset($parent[$tindex])?$parent[$tindex]:false;
+                    }
+                } else {
+                    if ($tindex === "this" && !(is_array($context)) ) {
+                        $titem = $context;
+                    } else {
+                        $titem = isset($context[$tindex])?$context[$tindex]:false;
+                    }
                 }
+
+                $ifCondition = ($titem) && true;
+                $titem = array();
+                $tindex = "";
                 continue;
             }
         }
@@ -221,7 +269,7 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
             "/(\{\{[&,~]?\w*\}\})/",
             $node,
             -1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY 
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
         foreach ($nodeReplace as $item) {
             if (strpos($item, "{{")  !== false ) {
@@ -259,26 +307,26 @@ function renderTemplate($template_block, $context, $parent = null, $root = null)
  * Obtiene los Macro Bloques de Plantillas
  *
  * @param string $htmlTemplate Plantilla a Analizar
- * 
+ *
  * @return array
  */
 function parseTemplate($htmlTemplate)
 {
     $regexp_array = array( 'foreach'       => '(\{\{foreach [~&]?\w*\}\})',
                             'endfor'       => '(\{\{endfor [~&]?\w*\}\})',
-                            'if'           => '(\{\{if \w*\}\})',
-                            'if_not'       =>'(\{\{ifnot \w*\}\})',
-                            'if_close'     => '(\{\{endif \w*\}\})',
-                            'ifnot_close'  => '(\{\{endifnot \w*\}\})');
+                            'if'           => '(\{\{if [~&]?\w*\}\})',
+                            'if_not'       =>'(\{\{ifnot [~&]?\w*\}\})',
+                            'if_close'     => '(\{\{endif [~&]?\w*\}\})',
+                            'ifnot_close'  => '(\{\{endifnot [~&]?\w*\}\})');
 
     $tag_regexp = "/" . join("|", $regexp_array). "/";
 
     //split the code with the tags regexp
     $template_code = preg_split(
-        $tag_regexp, 
-        $htmlTemplate, 
-        -1, 
-        PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY 
+        $tag_regexp,
+        $htmlTemplate,
+        -1,
+        PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
     );
 
     return $template_code;
