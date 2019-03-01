@@ -46,6 +46,7 @@ VALUES ( '%s','%s', '%s', %d, %f, %f, '%s', '%s','%s');";
     if ($result) {
         return getLastInserId();
     }
+    
     return false;
 }
 /**
@@ -105,5 +106,23 @@ function actualizarProducto($data)
         )
     );
     return $result;
+}
+
+/**
+ * Eliminando un Producto de l Base de Datos
+ *
+ * @param integer $prdcod Código del Producto a Eliminar
+ *
+ * @return boolean Resultado de la eliminación
+ */
+function eliminarProducto($prdcod)
+{
+    $delSql = "delete from `productos` where prdcod = %d;";
+    return ejecutarNonQuery(
+        sprintf(
+            $delSql,
+            $prdcod
+        )
+    );
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'models/productos.model.php';
+require_once 'libs/validadores.php';
 function run()
 {
     $viewData = Array();
@@ -66,6 +67,16 @@ function run()
                 }
                 break;
             case 'DEL':
+                $viewData["readonly"] = "readonly";
+                if (isset($_GET["prdcod"])) {
+                    $viewData["prdcod"] =  $_GET["prdcod"];
+                } else {
+                    redirectWithMessage(
+                        "Código de Producto no Válido",
+                        "index.php?page=productos"
+                    );
+                    die();
+                }
                 break;
             case 'DSP':
                 $viewData["readonly"] = "readonly";
@@ -88,25 +99,35 @@ function run()
         if (isset($_POST["tocken"])
             && $_POST["tocken"] === $_SESSION["producto_tocken"]
         ) {
+             mergeFullArrayTo($_POST, $viewData);
             $viewData["mode"] = $_POST["mode"];
             $viewData["prdcod"] = $_POST["prdcod"];
             $viewData["tocken"] = md5(time().'productos');
             $_SESSION["producto_tocken"] = $viewData["tocken"];
-           
+
             switch($viewData["mode"])
             {
             case 'INS':
                 $viewData["modeDsc"] = "Nuevo Producto";
                 $viewData["isinsert"] = true;
                 /// validar la data
-                /// llamamos al modelo de datos para insertar el producto
-                $lastID = agregarNuevoProducto($_POST);
-                if ($lastID) {
-                    redirectWithMessage("Producto Agregado Satisfactorimente", "index.php?page=productos");
-                    die();
-                } else {
-                     $viewData["errores"][] = "No se pudo agregar el producto";
-                     $viewData["haserrores"] = true;
+                if (!isValidSKU($_POST["prdSKU"])) {
+                    $viewData["haserrores"] = true;
+                    $viewData["errores"][] = "El codigo SKU no tiene el formato correcto. (VID|PTF|ACC)0000";
+                }
+
+                //$viewData["errores"] = Array();
+                //$viewData["haserrores"] = false;
+                if (!$viewData["haserrores"]) {
+                    /// llamamos al modelo de datos para insertar el producto
+                    $lastID = agregarNuevoProducto($_POST);
+                    if ($lastID) {
+                        redirectWithMessage("Producto Agregado Satisfactorimente", "index.php?page=productos");
+                        die();
+                    } else {
+                        $viewData["errores"][] = "No se pudo agregar el producto";
+                        $viewData["haserrores"] = true;
+                    }
                 }
                 break;
             case 'UPD':
@@ -116,6 +137,16 @@ function run()
                     die();
                 } else {
                      $viewData["errores"][] = "No se pudo Actualizar el producto";
+                     $viewData["haserrores"] = true;
+                }
+                break;
+            case 'DEL':
+                $result = eliminarProducto($_POST["prdcod"]);
+                if ($result) {
+                    redirectWithMessage("Producto Eliminado Satisfactorimente", "index.php?page=productos");
+                    die();
+                } else {
+                     $viewData["errores"][] = "No se pudo Eliminar el producto";
                      $viewData["haserrores"] = true;
                 }
                 break;
