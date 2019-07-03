@@ -42,4 +42,23 @@ function obtenerModas()
     return $modas;
 }
 
+/**
+ * Obtiene una moda por ID
+ *
+ * @param number $id identificador de la moda
+ *
+ * @return void
+ */
+function obtenerModaPorId($id)
+{
+    $sqlstr = "select `modas`.`idmoda`,
+    `modas`.`dscmoda`,
+    `modas`.`prcmoda`,
+    `modas`.`ivamoda`,
+    `modas`.`estmoda` from `modas` where idmoda=%d";
+
+    $modas = array();
+    $modas = obtenerUnRegistro(sprintf($sqlstr, $id));
+    return $modas;
+}
 ?>
