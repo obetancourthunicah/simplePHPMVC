@@ -1,6 +1,9 @@
 <h1>{{modeDsc}}</h1>
 <section class="row">
 <form action="index.php?page=moda" method="post" class="col-8 col-offset-2">
+  <input type="hidden" name="mode" value="{{mode}}"/>
+  <input type="hidden" name="xcfrt" value="{{xcfrt}}" />
+  <input type="hidden" name="btnConfirmar" value="Confirmar" />
   <fieldset class="row">
     <label class="col-5" for="idmoda">Código de Moda</label>
     <input type="text" name="idmoda" id="idmoda" value="{{idmoda}}" class="col-7" />
@@ -23,7 +26,7 @@
   </fieldset>
   <fieldset class="row">
     <div class="right">
-      <button type="button" id="btnConfirmar">Confirmar</button>
+      <button type="button" id="btnConfirmar" >Confirmar</button>
       &nbsp;
       <button type="button" id="btnCancelar">Cancelar</button>
     </div>
@@ -43,6 +46,12 @@
       e.preventDefault();
       e.stopPropagation();
       location.assign("index.php?page=modas");
-    })
+    });
+    $("#btnConfirmar").click(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      /*Aqui deberia hacer validación de datos*/
+      document.forms[0].submit();
+    });
   });
 </script>

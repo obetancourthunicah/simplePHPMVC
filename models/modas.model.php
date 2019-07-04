@@ -61,4 +61,59 @@ function obtenerModaPorId($id)
     $modas = obtenerUnRegistro(sprintf($sqlstr, $id));
     return $modas;
 }
+/**
+ * Agrega nuevo Moda a la tabla
+ *
+ * @param string $dscmoda Descripción de la Moda
+ * @param double $prcmoda Precio de la moda
+ * @param double $ivamoda Impuesto de la moda 0 - 1
+ * @param string $estmoda Estado de la Moda [ACT, INA, PLN, RET]
+ *
+ * @return integer affected rows
+ */
+function agregarNuevaModa($dscmoda, $prcmoda, $ivamoda, $estmoda) {
+    $insSql = "INSERT INTO modas(dscmoda, prcmoda, ivamoda, estmoda)
+      values ('%s', %f, %f, '%s');";
+      if (ejecutarNonQuery(
+          sprintf(
+              $insSql,
+              $dscmoda,
+              $prcmoda,
+              $ivamoda,
+              $estmoda
+          )))
+      {
+        return getLastInserId();
+      } else {
+          return false;
+      }
+}
+
+function modificarModa($dscmoda, $prcmoda, $ivamoda, $estmoda, $idmoda) 
+{
+    $updSQL = "UPDATE modas set dscmoda='%s', prcmoda=%f,
+    ivamoda=%f, estmoda='%s' where idmoda=%d;";
+
+    return ejecutarNonQuery(
+        sprintf(
+            $updSQL,
+            $dscmoda,
+            $prcmoda,
+            $ivamoda,
+            $estmoda,
+            $idmoda
+        )
+    );
+}
+function eliminarModa($idmoda)
+{
+    $delSQL = "DELETE FROM modas where idmoda=%d;";
+
+    return ejecutarNonQuery(
+        sprintf(
+            $delSQL,
+            $idmoda
+        )
+    );
+}
 ?>
