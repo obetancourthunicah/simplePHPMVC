@@ -116,4 +116,16 @@ function eliminarModa($idmoda)
         )
     );
 }
+
+function obtenerEstados()
+{
+    return array(
+        array("cod"=>"ACT", "dsc"=>"Activo"),
+        array("cod"=>"INA", "dsc"=>"Inactivo"),
+        array("cod"=>"PLN", "dsc"=>"En Planificación"),
+        array("cod"=>"RET", "dsc"=>"Retirado"),
+        array("cod"=>"SUS", "dsc"=>"Suspendido"),
+        array("cod"=>"DES", "dsc"=>"Descontinuado")
+    );
+}
 ?>

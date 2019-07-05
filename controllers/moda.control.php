@@ -12,7 +12,11 @@ require 'models/modas.model.php';
  */
 function run()
 {
+    $estadoModas = obtenerEstados();
+    $selectedEst = 'PLN';
     $mode = "";
+    $errores=array();
+    $hasError = false;
     $modeDesc = array(
       "DSP" => "Moda ",
       "INS" => "Creando Nueva Moda",
@@ -20,6 +24,11 @@ function run()
       "DEL" => "Eliminando Moda "
     );
     $viewData = array();
+    $viewData["showIdModa"] = true;
+    $viewData["showBtnConfirmar"] = true;
+    $viewData["readonly"] = '';
+    $viewData["selectDisable"] = '';
+
     if (isset($_POST["xcfrt"]) && isset($_SESSION["xcfrt"]) &&  $_SESSION["xcfrt"] !== $_POST["xcfrt"]) {
         redirectWithMessage(
             "Petición Solicitada no es Válida",
@@ -31,6 +40,9 @@ function run()
     if (isset($_POST["btnDsp"])) {
         $mode = "DSP";
         $moda = obtenerModaPorId($_POST["idmoda"]);
+        $viewData["showBtnConfirmar"] = false;
+        $viewData["readonly"] = 'readonly';
+        $viewData["selectDisable"] = 'disabled';
         mergeFullArrayTo($moda, $viewData);
         $viewData["modeDsc"] = $modeDesc[$mode] . $viewData["dscmoda"];
     }
@@ -45,6 +57,8 @@ function run()
         $mode = "DEL";
         //Vamos A Cargar los datos
         $moda = obtenerModaPorId($_POST["idmoda"]);
+        $viewData["readonly"] = 'readonly';
+        $viewData["selectDisable"] = 'disabled';
         mergeFullArrayTo($moda, $viewData);
         $viewData["modeDsc"] = $modeDesc[$mode] . $viewData["dscmoda"];
     }
@@ -52,6 +66,7 @@ function run()
         $mode = "INS";
         //Vamos A Cargar los datos
         $viewData["modeDsc"] = $modeDesc[$mode];
+         $viewData["showIdModa"]  = false;
     }
     // if ($mode == "") {
     //     print_r($_POST);
@@ -59,11 +74,19 @@ function run()
     // }
     if (isset($_POST["btnConfirmar"])) {
         $mode = $_POST["mode"];
+        $selectedEst = $_POST["estmoda"];
          mergeFullArrayTo($_POST, $viewData);
         switch($mode)
         {
         case 'INS':
-            if (agregarNuevaModa(
+            $viewData["showIdModa"] = false;
+            $viewData["modeDsc"] = $modeDesc[$mode];
+            //validaciones
+            if (floatval($viewData["prcmoda"]) <= 0) {
+                $errores[] = "El precio de la moda no puede ser 0";
+                $hasError = true;
+            }
+            if (!$hasError && agregarNuevaModa(
                 $viewData["dscmoda"],
                 $viewData["prcmoda"],
                 $viewData["ivamoda"],
@@ -78,6 +101,7 @@ function run()
             }
             break;
         case 'UPD':
+            $viewData["modeDsc"] = $modeDesc[$mode] . $viewData["dscmoda"];
             if (modificarModa(
                 $viewData["dscmoda"],
                 $viewData["prcmoda"],
@@ -94,6 +118,9 @@ function run()
             }
             break;
         case 'DEL':
+            $viewData["modeDsc"] = $modeDesc[$mode] . $viewData["dscmoda"];
+            $viewData["readonly"] = 'readonly';
+            $viewData["selectDisable"] = 'disabled';
             if (eliminarModa(
                 $viewData["idmoda"]
             )
@@ -108,6 +135,9 @@ function run()
         }
     }
     $viewData["mode"] = $mode;
+    $viewData["estadosModa"] = addSelectedCmbArray($estadoModas, 'cod', $selectedEst);
+    $viewData["hasErrors"] = $hasError;
+    $viewData["errores"] = $errores;
     renderizar("moda", $viewData);
 }
 run();
