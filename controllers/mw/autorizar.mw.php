@@ -5,7 +5,13 @@ require 'models/security/programas.model.php';
 function generarMenu($usercod)
 {
     $menu = array();
-    if(isAuthorized('dashboard',$usercod))$menu[] = array("mdlprg"=>"dashboard","mdldsc"=>"Administración");
+    // Aqui se establece las pestañas superiores
+    // Menu Principal Autenticado
+    if (isAuthorized('dashboard',$usercod)) $menu[] = array("mdlprg"=>"dashboard","mdldsc"=>"Administración");
+    // WW de Modas
+    if (isAuthorized('modas',$usercod)) $menu[] = array("mdlprg"=>"modas","mdldsc"=>"WW Modas");
+
+    $menu[] = array("mdlprg"=>"checkout","mdldsc"=>"Pagar Paypal Demo");
     addToContext('appmenu', $menu);
 }
 

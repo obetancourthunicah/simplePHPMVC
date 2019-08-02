@@ -23,7 +23,7 @@ if (isset($_GET["page"])) {
     $pageRequest = $_GET["page"];
 }
 
-//Incorporando los midlewares son codigos que se deben ejecutar
+//Incorporando los middlewares son codigos que se deben ejecutar
 //Siempre
 require_once "controllers/mw/verificar.mw.php";
 require_once "controllers/mw/site.mw.php";
@@ -48,12 +48,14 @@ case "logout":
 case "ficha":
     include_once "controllers/ficha.control.php";
     die();
+    /*
 case "modas":
     include_once "controllers/modas.control.php";
     die();
 case "moda":
     include_once "controllers/moda.control.php";
     die();
+    */
 }
 
 //Este switch se encarga de todo el enrutamiento que ocupa login
@@ -103,6 +105,31 @@ case "programas":
 case "programa":
     ($logged)?
       include_once "controllers/security/programa.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "modas":
+    ($logged)?
+      include_once "controllers/modas.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "moda":
+    ($logged)?
+      include_once "controllers/moda.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "checkout":
+    ($logged)?
+      include_once "controllers/checkout.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "checkoutapp":
+    ($logged)?
+      include_once "controllers/checkoutapproved.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "checkoutcnl":
+    ($logged)?
+      include_once "controllers/checkoutcancel.control.php":
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 }
