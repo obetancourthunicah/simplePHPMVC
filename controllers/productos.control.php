@@ -1,6 +1,11 @@
 <?php
+require_once 'models/productos.model.php';
+
 function run(){
-    renderizar("productos", array());
+    $viewData = array();
+    $viewData["username"] = "Orlando J Betancourth";
+    $viewData["productos"] = obtenerTodosProductos();
+    renderizar("productos", $viewData);
 }
 
 run();

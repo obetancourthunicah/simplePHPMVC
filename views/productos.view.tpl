@@ -1,4 +1,4 @@
-<h1>Gestión de Productos</h1>
+<h1>Gestión de Productos {{username}}</h1>
 <section>
 
 </section>
@@ -13,7 +13,14 @@
       </tr>
     </thead>
     <tbody>
-      
+      {{foreach productos}}
+        <tr>
+          <td>{{prdcod}}</td> 
+          <td>{{prddsc}}</td>
+          <td>{{prdprc}}</td>
+          <td>&nbsp;</td>
+        </tr>
+      {{endfor productos}}
     </tbody>
   </table>
 </section>
