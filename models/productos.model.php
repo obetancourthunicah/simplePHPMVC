@@ -21,4 +21,14 @@ function obtenerTodosProductos(){
     return $productos;
 }
 
+function obtenerProductoXCodigo($prdcod)
+{
+    $sqlstr = "select * from productos where prdcod=%d;";
+    $producto = array();
+    $producto = obtenerUnRegistro(
+        sprintf($sqlstr, $prdcod)
+    );
+    return $producto;
+}
+
 ?>
