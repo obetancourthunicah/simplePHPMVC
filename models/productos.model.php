@@ -31,4 +31,55 @@ function obtenerProductoXCodigo($prdcod)
     return $producto;
 }
 
+function agregarNuevoProducto($prddsc, $prdprc, $catcod) {
+    $sqlIns = "insert into productos(prddsc, prdprc, catcod) value ('%s', %f, %d );";
+    $result = ejecutarNonQuery(
+    sprintf(
+        $sqlIns,
+        $prddsc,
+        floatval($prdprc),
+        intval($catcod)
+    )
+    );
+    if ($result > 0) {
+        return getLastInserId();
+    } else {
+        return 0;
+    }
+}
+function actualizarProducto($prddsc, $prdprc, $catcod, $prdcod)
+{
+  $sqlUpd = "update productos set prddsc = '%s', prdprc = %f, catcod=%d where prdcod=%d;";
+  $result = ejecutarNonQuery(
+    sprintf(
+      $sqlUpd,
+      $prddsc,
+      floatval($prdprc),
+      intval($catcod),
+      intval($prdcod)
+    )
+  );
+  return $result;
+}
+//eliminarProducto
+function eliminarProducto($prdcod)
+{
+  $sqlDlt = "delete from productos where prdcod=%d;";
+  $result = ejecutarNonQuery(
+    sprintf(
+      $sqlDlt,
+      intval($prdcod)
+    )
+  );
+  return $result;
+}
+
+function obtenerCategorias()
+{
+    $sqlstr = "select * from categorias where catest='ACT';";
+    $categorias = array();
+    $categorias = obtenerRegistros($sqlstr);
+    return $categorias;
+}
+
 ?>
