@@ -42,6 +42,9 @@ case "home":
 case "login":
     include_once "controllers/security/login.control.php";
     die();
+case "signin":
+    include_once "controllers/security/signin.control.php";
+    die();
 case "logout":
     include_once "controllers/security/logout.control.php";
     die();
@@ -104,6 +107,16 @@ case "productos":
 case "producto":
     ($logged)?
       include_once "controllers/producto.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "categorias":
+    ($logged)?
+      include_once "controllers/categorias.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "categoria":
+    ($logged)?
+      include_once "controllers/categoria.control.php":
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 }

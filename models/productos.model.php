@@ -82,4 +82,61 @@ function obtenerCategorias()
     return $categorias;
 }
 
+function obtenerCategoriaXCodigo($catcod)
+{
+    $sqlstr = "select * from categorias where catcod=%d;";
+    $categoria = array();
+    $categoria = obtenerUnRegistro(
+        sprintf(
+            $sqlstr,
+            intval($catcod)
+        )
+    );
+    return $categoria;
+}
+
+function agregarCategoria(catdsc, catest){
+    $inssql = "insert into catetorias (catdsc, catest) values('%s', '%s);";
+    $result = ejecutarNonQuery(
+        sprintf($inssql, $catedsc, $catest)
+    );
+    if ($result >= 1){
+      return getLastInserId();
+    }
+    return false;
+}
+
+function actualizarCategoria($catdsc, $catest, $catcod)
+{
+    $udpsql="update categorias set catdsc='%s' and catest='%s where catcod=%d";
+    $result = ejecutarNonQuery(
+        srpintf(
+            $udpsql,
+            $catdsc,
+            $catest,
+            intval($catcod)
+        )
+    );
+    return $result >= 1;
+}
+
+function eliminarCategoria($catcod)
+{
+    $delsql = "delete from categorias where catcod=%d;";
+    $result = ejecutarNonQuery(
+        sprintf(
+            $delsql,
+            intval($catcod)
+        )
+    );
+    return $result >= 1;
+}
+
+function getEstadosCategoria(){
+    return array(
+      array("catest"=>"ACT","catestdsc"=>"Activo"),
+      array("catest"=>"INA","catestdsc"=>"Inactivo"),
+      array("catest"=>"RET","catestdsc"=>"Retirado")
+    );
+}
 ?>
