@@ -1,3 +1,6 @@
-CREATE SCHEMA `demoalgorith` ;
-CREATE USER 'demouser'@'%' IDENTIFIED BY 'carm3l1t4s';
-GRANT ALL ON demoalgorith.* TO 'demouser'@'%';
+CREATE SCHEMA `dynapolls` ;
+-- Mysql < 8
+ CREATE USER 'dynauser'@'%' IDENTIFIED BY 'fr4nc1scanus';
+-- Mysql >= 8
+-- CREATE USER 'dynauser'@'%' IDENTIFIED WITH mysql_native_password BY 'fr4nc1scanus';
+GRANT ALL ON dynapolls.* TO 'dynauser'@'%';
