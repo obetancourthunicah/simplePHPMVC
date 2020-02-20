@@ -48,6 +48,9 @@ case "logout":
 case "ficha":
     include_once "controllers/ficha.control.php";
     die();
+case "categorias":
+    include_once "controllers/mantenimientos/categorias.control.php";
+    die();
 }
 
 //Este switch se encarga de todo el enrutamiento que ocupa login
