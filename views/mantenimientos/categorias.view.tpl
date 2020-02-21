@@ -9,7 +9,7 @@
           <th>Código</th>
           <th>Categoría</th>
           <th>Estado</th>
-          <th><button>Add New</button></th>
+          <th><button id="btnNew">Add New</button></th>
         </tr>
       </thead>
       <tbody>
@@ -29,3 +29,14 @@
     </table>
   </main>
 </section>
+<script>
+  $().ready(
+    function(){
+      $("#btnNew").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.assign("index.php?page=categoria&mode=INS&ctgcod=0");
+      });
+    }
+  )
+</script>

@@ -14,4 +14,12 @@ function obtenerTodasCategorias()
     return $arrCategorias;
 }
 
+function guardarNuevaCategoria($ctgdsc, $ctgest){
+    $sqlIns = "INSERT into categorias (ctgdsc, ctgest) values ('%s', '%s');";
+    $isOK = ejecutarNonQuery(
+        sprintf($sqlIns, $ctgdsc, $ctgest)
+    );
+    return getLastInserId();
+}
+
 ?>

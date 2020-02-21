@@ -51,7 +51,11 @@ case "ficha":
 case "categorias":
     include_once "controllers/mantenimientos/categorias.control.php";
     die();
+case "categoria":
+    include_once "controllers/mantenimientos/categoria.control.php";
+    die();
 }
+
 
 //Este switch se encarga de todo el enrutamiento que ocupa login
 $logged = mw_estaLogueado();
