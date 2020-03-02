@@ -22,4 +22,25 @@ function guardarNuevaCategoria($ctgdsc, $ctgest){
     return getLastInserId();
 }
 
+function obtenerCategoriaPorCodigo($ctgcod)
+{
+    $sqlstr = "SELECT * from categorias where ctgcod = %d;";
+    return obtenerUnRegistro(
+        sprintf($sqlstr, $ctgcod)
+    );
+}
+
+function actualizarCategoria($ctgcod, $ctgdsc, $ctgest)
+{
+    $sqludp = "update categorias set ctgdsc = '%s', ctgest='%s' where ctgcod=%d;";
+    return ejecutarNonQuery(sprintf($sqludp, $ctgdsc, $ctgest, $ctgcod));
+}
+
+function eliminarCategoria($ctgcod)
+{
+    $sqldel = "delete from categorias where ctgcod=%d";
+    return ejecutarNonQuery(
+        sprintf($sqldel, $ctgcod)
+    );
+}
 ?>

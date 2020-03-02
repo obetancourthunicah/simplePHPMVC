@@ -19,9 +19,9 @@
             <td>{{ctgdsc}}</td>
             <td>{{ctgest}}</td>
             <td>
-              <button>Edit</button>
-              <button>Delete</button>
-              <button>View</button>
+              <a class="btn" href="index.php?page=categoria&mode=UPD&ctgcod={{ctgcod}}">Editar</a>
+              <a class="btn" href="index.php?page=categoria&mode=DSP&ctgcod={{ctgcod}}">Ver</a>
+              <a class="btn" href="index.php?page=categoria&mode=DEL&ctgcod={{ctgcod}}">Eliminar</a>
             </td>
           </tr>
           {{endfor categorias}}
