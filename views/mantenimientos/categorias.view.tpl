@@ -2,31 +2,33 @@
   <header>
     <h1>Trabajar con Categorías</h1>
   </header>
-  <main>
-    <table>
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Categoría</th>
-          <th>Estado</th>
-          <th><button id="btnNew">Add New</button></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{foreach categorias}}
+  <main class="row">
+    <div class="col-12 col-md-8 col-offset-2">
+      <table class="full-width">
+        <thead>
           <tr>
-            <td>{{ctgcod}}</td>
-            <td>{{ctgdsc}}</td>
-            <td>{{ctgest}}</td>
-            <td>
-              <a class="btn" href="index.php?page=categoria&mode=UPD&ctgcod={{ctgcod}}">Editar</a>
-              <a class="btn" href="index.php?page=categoria&mode=DSP&ctgcod={{ctgcod}}">Ver</a>
-              <a class="btn" href="index.php?page=categoria&mode=DEL&ctgcod={{ctgcod}}">Eliminar</a>
-            </td>
+            <th>Código</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th class="center"><button id="btnNew">Add New</button></th>
           </tr>
-          {{endfor categorias}}
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="zebra">
+          {{foreach categorias}}
+            <tr>
+              <td>{{ctgcod}}</td>
+              <td>{{ctgdsc}}</td>
+              <td>{{ctgest}}</td>
+              <td class="center">
+                <a class="btn" href="index.php?page=categoria&mode=UPD&ctgcod={{ctgcod}}">Editar</a>
+                <a class="btn" href="index.php?page=categoria&mode=DSP&ctgcod={{ctgcod}}">Ver</a>
+                <a class="btn" href="index.php?page=categoria&mode=DEL&ctgcod={{ctgcod}}">Eliminar</a>
+              </td>
+            </tr>
+            {{endfor categorias}}
+        </tbody>
+      </table>
+    </div>
   </main>
 </section>
 <script>
