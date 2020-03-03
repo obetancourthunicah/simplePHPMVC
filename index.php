@@ -54,6 +54,13 @@ case "categorias":
 case "categoria":
     include_once "controllers/mantenimientos/categoria.control.php";
     die();
+    //Centro de Costos
+case "centros_de_costos":
+    include_once "controllers/mantenimientos/centroscostos.control.php";
+    die();
+case "centro_de_costos":
+    include_once "controllers/mantenimientos/centrocostos.control.php";
+    die();
 }
 
 
