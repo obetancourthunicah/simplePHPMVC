@@ -1,0 +1,21 @@
+Esquema de Seguridad
+
+Estructura
+    Usuario
+        --  UXR
+    Roles
+        -- RxP
+    Programas
+
+
+Implementación
+  Autenticación
+      Estrategias basica -- user contraseña
+                  token  --  BAC token transferencias
+                  biometricos --  hullea dactilar 
+                  RFID -- tarjetas pasivas de codigo unico
+                  hibridos | basica | token Doble factor
+                  vigencia de sesión 
+  Autorización
+      Acciones --> Autorizables 
+      Acciones --> Autorizada por Defecto

@@ -48,19 +48,6 @@ case "logout":
 case "ficha":
     include_once "controllers/ficha.control.php";
     die();
-case "categorias":
-    include_once "controllers/mantenimientos/categorias.control.php";
-    die();
-case "categoria":
-    include_once "controllers/mantenimientos/categoria.control.php";
-    die();
-    //Centro de Costos
-case "centros_de_costos":
-    include_once "controllers/mantenimientos/centroscostos.control.php";
-    die();
-case "centro_de_costos":
-    include_once "controllers/mantenimientos/centrocostos.control.php";
-    die();
 }
 
 
@@ -111,6 +98,27 @@ case "programas":
 case "programa":
     ($logged)?
       include_once "controllers/security/programa.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "categorias":
+    ($logged) ?
+      include_once "controllers/mantenimientos/categorias.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "categoria":
+    ($logged) ?
+      include_once "controllers/mantenimientos/categoria.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+    //Centro de Costos
+case "centros_de_costos":
+    ($logged) ?
+      include_once "controllers/mantenimientos/centroscostos.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "centro_de_costos":
+    ($logged) ?
+      include_once "controllers/mantenimientos/centrocostos.control.php":
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 }
