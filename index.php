@@ -48,6 +48,9 @@ case "logout":
 case "ficha":
     include_once "controllers/ficha.control.php";
     die();
+case 'register':
+    include_once "controllers/security/register.control.php";
+    die();
 }
 
 
@@ -68,6 +71,11 @@ switch ($pageRequest) {
 case "dashboard":
     ($logged)?
       include_once "controllers/dashboard.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "security":
+    ($logged)?
+      include_once "controllers/security/security.control.php":
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 case "users":
@@ -98,6 +106,11 @@ case "programas":
 case "programa":
     ($logged)?
       include_once "controllers/security/programa.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "parametros":
+    ($logged) ?
+      include_once "controllers/mantenimientos/mantenimientos.control.php":
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 case "categorias":

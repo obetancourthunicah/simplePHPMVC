@@ -5,7 +5,19 @@ require 'models/security/programas.model.php';
 function generarMenu($usercod)
 {
     $menu = array();
-    if(isAuthorized('dashboard',$usercod))$menu[] = array("mdlprg"=>"dashboard","mdldsc"=>"Administración");
+
+    if (isAuthorized('dashboard', $usercod)) {
+        $menu[] = array("mdlprg"=>"dashboard","mdldsc"=>"Inicio");
+    }
+    //Agregar Nuevos o Partes del Menu (Recuerde no Sobre Cargaer)
+    // Perfil Administrativo
+    if (isAuthorized('security', $usercod)) {
+        $menu[] = array("mdlprg"=>"security","mdldsc"=>"Seguridad");
+    }
+    if (isAuthorized('parametros', $usercod)) {
+        $menu[] = array("mdlprg"=>"parametros","mdldsc"=>"Mantenimientos");
+    }
+
     addToContext('appmenu', $menu);
 }
 

@@ -302,7 +302,11 @@ select {
   pointer-events: none;
 }
 
-
+.error{
+  display: block;
+  color:#a30202;
+  font-weight: bold;
+}
 
 
 .dp-modal {

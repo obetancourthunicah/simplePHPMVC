@@ -3,7 +3,7 @@
     Simple PHP MVC Demo
   </h1>
 
-  <a href="index.php?page=admin" class="btn btn-primary">Crear Cuenta</a>
+  <a href="index.php?page=register" class="btn btn-primary">Crear Cuenta</a>
 </div>
 <section class="cards">
   <div>
