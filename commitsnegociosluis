@@ -1,0 +1,346 @@
+<?php
+require_once "models/mantenimientos/productos.model.php";
+function run()
+{
+    $arrViewData = array();
+    $arrViewData["productos"] = obtenerProductos();
+    renderizar('mantenimientos/productos', $arrViewData);
+}
+run();
+?>
+<?php
+require_once "models/mantenimientos/productos.model.php";
+function run()
+{
+    $arrModesDsc = array(
+        "INS" => "Nuevo Producto",
+        "UPD" => "Actualizando P %s %s",
+        "DEL" => "Eliminando P %s %s",
+        "DSP" => "%s %s",
+    );
+    $arrDataView = array();
+    $arrDataView["codprd"]=0;
+    $arrDataView["ccdsc"]="",
+    $arrDataView["dscprd"]="",
+    $arrDataView["sdscprd"]="",
+    $arrDataView["ldscprd"]="",
+    $arrDataView["skuprd"]="",
+    $arrDataView["bcdprd"]="",
+    $arrDataView["stkprd"]=0,
+    $arrDataView["typprd"]="",
+    $arrDataView["prcprd"]=0.0,
+    $arrDataView["urlprd"]="",
+    $arrDataView["urlthbprd"=""],
+    $arrDataView["estprd_ACT"] = "";
+    $arrDataView["estprd_INA"] = "";
+    $arrDataView["estprd_PLN"] = "";
+    $arrDataView["estprd_RET"] = "";
+    $arrDataView["estprd_DSC"] = "";
+    $arrDataView["typprd_RTL"] = "";
+    $arrDataView["typprd_SRV"] = "";
+    $arrDataView["typprd_ISK"] = "";
+    $arrDataView["mode"] = "INS";
+    $arrDataView["modedsc"] = "";
+
+    if ($_SERVER["REQUEST_METHOD"]==="GET") {
+        $arrDataView["mode"] = $_GET["mode"];
+        $arrDataView["codprd"] = $_GET["codprd"];
+    }
+    if ($_SERVER["REQUEST_METHOD"]==="POST") {
+        $arrDataView["codprd"] = $_POST["codprd"];
+        $arrDataView["ccdsc"] = $_POST["ccdsc"];
+        $arrDataView["dscprd"] = $_POST["dscprd"];
+        $arrDataView["sdscprd"] = $_POST["sdscprd"];
+        $arrDataView["ldscprd"] = $_POST["ldscprd"];
+        $arrDataView["skuprd"] = $_POST["skuprd"];
+        $arrDataView["bcdprd"] = $_POST["bcdprd"];
+        $arrDataView["stkprd"] = intval($_POST["stkprd"]);
+        $arrDataView["typprd"] = $_POST["typprd"];
+        $arrDataView["prcprd"] = doubleval($_POST["prcprd"]);
+        $arrDataView["urlprd"] = $_POST["urlprd"];
+        $arrDataView["urlthbprd"] = $_POST["urlthbprd"];
+        $arrDataView["ccdsc"] = $_POST["ccdsc"];
+        $arrDataView["estprd"] = $_POST["estprd"];
+        $arrDataView["mode"] = $_POST["mode"];
+        switch($arrDataView["mode"])
+        {
+        case "INS":
+            AddProd(
+                $arrDataView["ccdsc"],
+                $arrDataView["dscprd"],
+                $arrDataView["sdscprd"],
+                $arrDataView["ldscprd"],
+                $arrDataView["skuprd"],
+                $arrDataView["bcdprd"],
+                $arrDataView["stkprd"],
+                $arrDataView["typprd"],
+                $arrDataView["prcprd"],
+                $arrDataView["urlprd"],
+                $arrDataView["urlthbprd"],
+                $arrDataView["estprd"]      
+            );
+            redirectWithMessage("Guardado", "index.php?page=productos");
+            break;
+        case "UPD":
+            actualizarproducto(
+                $arrDataView["ccdsc"],
+                $arrDataView["dscprd"],
+                $arrDataView["sdscprd"],
+                $arrDataView["ldscprd"],
+                $arrDataView["skuprd"],
+                $arrDataView["bcdprd"],
+                $arrDataView["stkprd"],
+                $arrDataView["typprd"],
+                $arrDataView["prcprd"],
+                $arrDataView["urlprd"],
+                $arrDataView["urlthbprd"],
+                $arrDataView["estprd"]            
+            );
+            redirectWithMessage("Actualizado", "index.php?page=productos");
+            break;
+        case "DEL":
+            eliminarproducto($arrDataView["codprd"]);
+            redirectWithMessage("Eliminado", "index.php?page=productos");
+            break;
+        }
+    }
+
+    if ($arrDataView["mode"] !== "INS") {
+        $tmpProducto = obtenerproductoxCodigo($arrDataView["codprd"]);
+        mergeFullArrayTo($tmpProducto, $arrDataView);
+    }
+    $arrDataView["modedsc"] = sprintf(
+        $arrModesDsc[$arrDataView["mode"]],
+        $arrDataView["codprd"],
+        $arrDataView["cccdsc"]
+    );
+    $arrDataView["estprd_ACT"] = ($arrDataView["estprd"] ==="ACT")?true:false;
+    $arrDataView["estprd_INA"] = ($arrDataView["estprd"] === "INA") ? true : false;
+    $arrDataView["estprd_PLN"] = ($arrDataView["estprd"] === "PLN") ? true : false;
+    $arrDataView["estprd_RET"] = ($arrDataView["estprd"] === "RET") ? true : false;
+    $arrDataView["estprd_DSC"] = ($arrDataView["estprd"] === "DSC") ? true : false;
+    $arrDataView["typprd_RTL"] = ($arrDataView["typprd"] === "RTL") ? true : false;
+    $arrDataView["typprd_SRV"] = ($arrDataView["typprd"] === "SRV") ? true : false;
+    $arrDataView["typprd_ISK"] = ($arrDataView["typprd"] === "ISK") ? true : false;
+
+    renderizar("mantenimientos/producto", $arrDataView);
+}
+run();
+
+<?php
+require_once 'libs/dao.php';
+
+function obtenerProductos()
+{
+    $sqlstr = "select * from productos;";
+    return obtenerRegistros($sqlstr);
+}
+
+
+function obtenerproductoxCodigo($cccod)
+{
+    $sqlstr = "select * from productos where codprd=%d;";
+    return obtenerUnRegistro(
+        sprintf(
+            $sqlstr,
+            $cccod
+        )
+    );
+}
+
+function AddProd($dscprd,$sdscprd,$ldscprd,$skuprd,$bcdprd,$stkprd,$typprd,$prcprd,$urlprd,$urlthbprd,$estprd)
+{
+    $sqlins = "insert into productos (dscprd,sdscprd,ldscprd,skuprd,bcdprd,stkprd,typprd,prcprd,urlprd,urlthbprd,estprd) values('%s', '%s' , '%s' , '%s' , '%s' , '%d' , '%s' , '%.lf' , '%s' , '%s' , '%s');";
+    return ejecutarNonQuery(
+        sprintf(
+            $sqlins,
+            $dscprd,
+            $sdscprd,
+            $ldscprd,
+            $skuprd,
+            $bcdprd,
+            $stkprd,
+            $typprd,
+            $prcprd,
+            $urlprd,
+            $urlthbprd,
+            $estprd
+        )
+    );
+}
+
+function actualizarproducto($codprd,$dscprd,$sdscprd,$ldscprd,$skuprd,$bcdprd,$stkprd,$typprd,$prcprd,$urlprd,$urlthbprd,$estprd)
+{
+    $sqlupd = "update productos set dscprd='%s', sdscprd='%s' , ldscprd='%s' ,skuprd='%s' ,bcdprd='%s' , stkprd='%d',typprd='%s' ,prcprd='%lf' ,urlprd='%s' ,urlthbprd='%s' ,estprd='%s'
+     where codprd=%d;";
+    return ejecutarNonQuery(
+        sprintf(
+            $sqlupd,
+            $dscprd,
+            $sdscprd,
+            $ldscprd,
+            $skuprd,
+            $bcdprd,
+            $stkprd,
+            $typprd,
+            $prcprd,
+            $urlprd,
+            $urlthbprd,
+            $estprd
+        )
+    );
+}
+
+function eliminarproducto($codprd)
+{
+    $sqldel = "delete from productos where codprd=%d;";
+    return ejecutarNonQuery(
+        sprintf(
+            $sqldel,
+            $codprd
+        )
+    );
+}
+
+
+
+?>
+
+
+
+
+
+<?php
+require_once "models/mantenimientos/productos.model.php";
+function run()
+{
+    $arrModesDsc = array(
+        "INS" => "Nuevo Producto",
+        "UPD" => "Actualizando P %s %s",
+        "DEL" => "Eliminando P %s %s",
+        "DSP" => "%s %s",
+    );
+    $arrDataView = array();
+    $arrDataView["codprd"]=0;
+    $arrDataView["ccdsc"]="",
+    $arrDataView["dscprd"]="",
+    $arrDataView["sdscprd"]="",
+    $arrDataView["ldscprd"]="",
+    $arrDataView["skuprd"]="",
+    $arrDataView["bcdprd"]="",
+    $arrDataView["stkprd"]=0,
+    $arrDataView["typprd"]="",
+    $arrDataView["prcprd"]=0.0,
+    $arrDataView["urlprd"]="",
+    $arrDataView["urlthbprd"=""],
+    $arrDataView["estprd_ACT"] = "";
+    $arrDataView["estprd_INA"] = "";
+    $arrDataView["estprd_PLN"] = "";
+    $arrDataView["estprd_RET"] = "";
+    $arrDataView["estprd_DSC"] = "";
+    $arrDataView["typprd_RTL"] = "";
+    $arrDataView["typprd_SRV"] = "";
+    $arrDataView["typprd_ISK"] = "";
+    $arrDataView["mode"] = "INS";
+    $arrDataView["modedsc"] = "";
+
+    if ($_SERVER["REQUEST_METHOD"]==="GET") {
+        $arrDataView["mode"] = $_GET["mode"];
+        $arrDataView["codprd"] = $_GET["codprd"];
+    }
+    if ($_SERVER["REQUEST_METHOD"]==="POST") {
+        $arrDataView["codprd"] = $_POST["codprd"];
+        $arrDataView["ccdsc"] = $_POST["ccdsc"];
+        $arrDataView["dscprd"] = $_POST["dscprd"];
+        $arrDataView["sdscprd"] = $_POST["sdscprd"];
+        $arrDataView["ldscprd"] = $_POST["ldscprd"];
+        $arrDataView["skuprd"] = $_POST["skuprd"];
+        $arrDataView["bcdprd"] = $_POST["bcdprd"];
+        $arrDataView["stkprd"] = intval($_POST["stkprd"]);
+        $arrDataView["typprd"] = $_POST["typprd"];
+        $arrDataView["prcprd"] = doubleval($_POST["prcprd"]);
+        $arrDataView["urlprd"] = $_POST["urlprd"];
+        $arrDataView["urlthbprd"] = $_POST["urlthbprd"];
+        $arrDataView["ccdsc"] = $_POST["ccdsc"];
+        $arrDataView["estprd"] = $_POST["estprd"];
+        $arrDataView["mode"] = $_POST["mode"];
+        switch($arrDataView["mode"])
+        {
+        case "INS":
+            AddProd(
+                $arrDataView["ccdsc"],
+                $arrDataView["dscprd"],
+                $arrDataView["sdscprd"],
+                $arrDataView["ldscprd"],
+                $arrDataView["skuprd"],
+                $arrDataView["bcdprd"],
+                $arrDataView["stkprd"],
+                $arrDataView["typprd"],
+                $arrDataView["prcprd"],
+                $arrDataView["urlprd"],
+                $arrDataView["urlthbprd"],
+                $arrDataView["estprd"]      
+            );
+            redirectWithMessage("Guardado", "index.php?page=productos");
+            break;
+        case "UPD":
+            actualizarproducto(
+                $arrDataView["ccdsc"],
+                $arrDataView["dscprd"],
+                $arrDataView["sdscprd"],
+                $arrDataView["ldscprd"],
+                $arrDataView["skuprd"],
+                $arrDataView["bcdprd"],
+                $arrDataView["stkprd"],
+                $arrDataView["typprd"],
+                $arrDataView["prcprd"],
+                $arrDataView["urlprd"],
+                $arrDataView["urlthbprd"],
+                $arrDataView["estprd"]            
+            );
+            redirectWithMessage("Actualizado", "index.php?page=productos");
+            break;
+        case "DEL":
+            eliminarproducto($arrDataView["codprd"]);
+            redirectWithMessage("Eliminado", "index.php?page=productos");
+            break;
+        }
+    }
+
+    if ($arrDataView["mode"] !== "INS") {
+        $tmpProducto = obtenerproductoxCodigo($arrDataView["codprd"]);
+        mergeFullArrayTo($tmpProducto, $arrDataView);
+    }
+    $arrDataView["modedsc"] = sprintf(
+        $arrModesDsc[$arrDataView["mode"]],
+        $arrDataView["codprd"],
+        $arrDataView["cccdsc"]
+    );
+    $arrDataView["estprd_ACT"] = ($arrDataView["estprd"] ==="ACT")?true:false;
+    $arrDataView["estprd_INA"] = ($arrDataView["estprd"] === "INA") ? true : false;
+    $arrDataView["estprd_PLN"] = ($arrDataView["estprd"] === "PLN") ? true : false;
+    $arrDataView["estprd_RET"] = ($arrDataView["estprd"] === "RET") ? true : false;
+    $arrDataView["estprd_DSC"] = ($arrDataView["estprd"] === "DSC") ? true : false;
+    $arrDataView["typprd_RTL"] = ($arrDataView["typprd"] === "RTL") ? true : false;
+    $arrDataView["typprd_SRV"] = ($arrDataView["typprd"] === "SRV") ? true : false;
+    $arrDataView["typprd_ISK"] = ($arrDataView["typprd"] === "ISK") ? true : false;
+
+    renderizar("mantenimientos/producto", $arrDataView);
+}
+run();
+?>
+
+
+
+
+
+<?php
+require_once "models/mantenimientos/productos.model.php";
+function run()
+{
+    $arrViewData = array();
+    $arrViewData["productos"] = obtenerProductos();
+    renderizar('mantenimientos/productos', $arrViewData);
+}
+run();
+?>
