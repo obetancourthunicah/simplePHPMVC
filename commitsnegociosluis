@@ -353,7 +353,7 @@ run();
       <input type="hidden" name="codprd" value="{{codprd}}" />    
         </fieldset>
         <fieldset>
-            <input type="text" name="ctgcoddummy" value="{{codprd}}" placeholder="Código"
+            <input type="text" name="codprd" value="{{codprd}}" placeholder="Código"
             disabled readonly
             />
         </fieldset>
@@ -468,9 +468,9 @@ run();
                 <td>{{urlthbprd}}</td>
                 <td>{{estprd}}</td>
                 <td>
-                    <a class="btn" href="index.php?page=producto&mode=UPD&ctgcod={{codprd}}">Editar</a>
-                    <a class="btn" href="index.php?page=producto&mode=DSP&ctgcod={{codprd}}">Ver</a>
-                    <a class="btn" href="index.php?page=producto&mode=DEL&ctgcod={{codprd}}">Eliminar</a>
+                    <a class="btn" href="index.php?page=producto&mode=UPD&codprd={{codprd}}">Editar</a>
+                    <a class="btn" href="index.php?page=producto&mode=DSP&codprd={{codprd}}">Ver</a>
+                    <a class="btn" href="index.php?page=producto&mode=DEL&codprd={{codprd}}">Eliminar</a>
                 </td>
             </tr>
             {{endfor productos}}
@@ -488,5 +488,25 @@ run();
       }
     )
   </script>
+  
+  
+  CREATE TABLE `dynapolls`.`productos` (
+  `codprd` BIGINT(18) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `dscprd` VARCHAR(70) NOT NULL,
+  `sdscprd` VARCHAR(255) NOT NULL,
+  `ldscprd` VARCHAR(500) NOT NULL,
+  `skuprd` VARCHAR(128) NOT NULL,
+  `bcdprd` VARCHAR(128) NOT NULL,
+  `stkprd` INT NOT NULL,
+  `typprd` CHAR(3) NOT NULL,
+  `prcprd` DECIMAL(12,2) NOT NULL,
+  `urlprd` VARCHAR(255) NOT NULL,
+  `urlthbprd` VARCHAR(255) NOT NULL,
+  `estprd` CHAR(3) NOT NULL,
+  PRIMARY KEY (`codprd`),
+  UNIQUE INDEX `skuprd_UNIQUE` (`skuprd` ASC) VISIBLE,
+  UNIQUE INDEX `bcdprd_UNIQUE` (`bcdprd` ASC) VISIBLE);
+
+  
   
   
