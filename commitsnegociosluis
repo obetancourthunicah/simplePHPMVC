@@ -330,8 +330,7 @@ function run()
 run();
 ?>
 
-
-
+//VISTAS
 
 
 <?php
@@ -344,3 +343,150 @@ function run()
 }
 run();
 ?>
+
+<header>
+    <h1>Formulario de Ecomerce</h1>
+</header>
+<main>
+    <form action="index.php?page=producto" method="POST"> 
+        <fieldset>
+      <input type="hidden" name="codprd" value="{{codprd}}" />    
+        </fieldset>
+        <fieldset>
+            <input type="text" name="ctgcoddummy" value="{{codprd}}" placeholder="Código"
+            disabled readonly
+            />
+        </fieldset>
+        <fieldset>
+            <label>Descripcion Comercial</label>
+            <input type="text" name="dscprd" value="{{dscprd}}"/>
+        </fieldset>
+        <fieldset>
+            <label>Descripcion Corta</label>
+            <input type="text" name="sdscprd" value="{{sdscprd}}"/>
+        </fieldset>
+        <fieldset>
+            <label>Descripcion Larga</label>
+            <input type="text" name="ldscprd " value="{{ldscprd }}"/>
+        </fieldset>
+        <fieldset>
+            <label>Codigo Interno de la Empresa</label>
+            <input type="text" name="skuprd" value="{{skuprd }}"/>
+        </fieldset>
+        <fieldset>
+            <label>Codigo de Barras</label>
+            <input type="text" name="bcdprd" value="{{bcdprd }}"/>
+        </fieldset>
+        <fieldset>
+            <label>Stock</label>
+            <input  type="text"  name="stkprd" value="{{stkprd}}"/>
+        </fieldset>
+        <fieldset>
+            <label>Tipo de Producto</label>
+            <select name="typprd">
+                <option value="RTL" {{typprdRTLTrue}}>Retail</option>
+                <option value="SRV" {{typprdSRVTrue}}>Servicio</option>
+                <option value="ISK" {{typprdISKTrue}}>Infinite Stock</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <label>Precio</label>
+            <input  type="text"  name="prcprd" value="{{prcprd}}"/>
+        </fieldset>
+        <fieldset>
+            <label>Imagen del producto</label>
+            <input  type="text"  name="urlprd" value="{{urlprd}}"/>
+        </fieldset>
+        <fieldset>
+            <label>Imagen pequeña del producto</label>
+            <input  type="text"  name="urlthbprd" value="{{urlthbprd}}"/>
+        </fieldset>
+        <fieldset>
+            <label>Estado</label>
+            <select name="estprd">
+                <option value="ACT" {{estprdACTTrue}}>Activo</option>
+                <option value="INA" {{estprdINATrue}}>Inactivo</option>
+                <option value="PLN" {{estprdPLNTrue}}>Planificacion</option>
+                <option value="RET" {{estprdRETTrue}}>Retirado</option>
+                <option value="DSC" {{estprdDSCTrue}}>Descontinuado</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <button type="submit" name="btnGuardar">Guardar</button>
+            <button id="btnCancelar">Cancelar</button>
+        </fieldset>
+
+    </form>
+</main>
+  <script>
+    $().ready(function(){
+      $("#btnCancelar").click(
+        function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.assign("index.php?page=productos");
+        }
+      );
+    });
+  </script>
+  
+  <header>
+    <h1>Mantenimiento de Productos</h1>
+</header>
+<main>
+    <table>
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Descripcion Comercial</th>
+                <th>Descripcion Corta</th>
+                <th>Descripcion Larga</th>
+                <th>Codigo Interno de la Empresa</th>
+                <th>Codigo de Barras</th>
+                <th>Stock</th>
+                <th>Tipo de Producto</th>
+                <th>Precio</th>
+                <th>Imagen del producto</th>
+                <th>Imagen pequeña del producto</th>
+                <th>>Estado</th> 
+                <th><button id="btnNew">Add New</button></th> 
+            </tr>
+        </thead>
+        <tbody>
+            {{foreach productos}}
+            <tr>
+                <td>{{codprd}}</td>
+                <td>{{dscprd}}</td>
+                <td>{{sdscprd}}</td>
+                <td>{{ldscprd }}</td>
+                <td>{{skuprd }}</td>
+                <td>{{bcdprd }}</td>
+                <td>{{stkprd}}</td>
+                <td>{{typprd}}</td>
+                <td>{{prcprd}}</td>
+                <td>{{urlprd}}</td>
+                <td>{{urlthbprd}}</td>
+                <td>{{estprd}}</td>
+                <td>
+                    <a class="btn" href="index.php?page=producto&mode=UPD&ctgcod={{codprd}}">Editar</a>
+                    <a class="btn" href="index.php?page=producto&mode=DSP&ctgcod={{codprd}}">Ver</a>
+                    <a class="btn" href="index.php?page=producto&mode=DEL&ctgcod={{codprd}}">Eliminar</a>
+                </td>
+            </tr>
+            {{endfor productos}}
+        </tbody>
+    </table>
+</main>
+<script>
+    $().ready(
+      function(){
+        $("#btnNew").click(function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.assign("index.php?page=producto&mode=INS&codprd=0");
+        });
+      }
+    )
+  </script>
+  
+  
