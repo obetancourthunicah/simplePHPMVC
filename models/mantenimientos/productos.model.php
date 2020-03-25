@@ -15,6 +15,37 @@ function todosLosProductos()
     return obtenerRegistros($sqlSelect);
 }
 
+function productoCatalogo()
+{
+    $sqlSelect = "SELECT codprd, dscprd, stkprd, skuprd, urlthbprd, prcprd from productos where estprd in('ACT','DSC');";
+    $tmpProducto =  obtenerRegistros($sqlSelect);
+    $assocProducto = array();
+    foreach ($tmpProducto as $producto) {
+    //Cambiando a imagen predeterminada si no hay imagen
+        $assocProducto[$producto["codprd"]] = $producto;
+        if (preg_match('/^\s*$/', $producto["urlthbprd"])) {
+            $assocProducto[$producto["codprd"]]["urlthbprd"] = "public/imgs/noprodthb.png";
+        }
+    }
+    $timeDelta =  6 * 60 * 60; //h , m, s
+    $sqlSelectReserved = "select codprd, sum(crrctd) as reserved
+    from carretilla where TIME_TO_SEC(TIMEDIFF(now(), crrfching)) <= %d
+    group by codprd;
+    ";
+    $arrReserved = obtenerRegistros(
+        sprintf(
+            $sqlSelectReserved,
+            $timeDelta
+        )
+    );
+    foreach ($arrReserved as $reserved) {
+        if (isset($assocProducto[$reserved["codprd"]])) {
+            $assocProducto[$reserved["codprd"]]["stkprd"] = $assocProducto[$reserved["codprd"]]["stkprd"] - $reserved["reserved"];
+        }
+    }
+    return $assocProducto;
+}
+
 function obtenerUnProducto($codprd)
 {
     $sqlSelect = "SELECT * FROM productos WHERE codprd = %d;";
@@ -28,10 +59,10 @@ function insertProducto($dscprd, $sdscprd, $ldscprd, $skuprd, $bcdprd, $stkprd, 
 {
     $sqlInsert = "INSERT INTO productos (dscprd, sdscprd, ldscprd, skuprd, bcdprd, stkprd, typprd, prcprd, urlprd, urlthbprd, estprd) 
                   VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s', %lf, '%s', '%s', '%s');";
-  
+
     $isOk = ejecutarNonQuery(
       sprintf($sqlInsert, $dscprd, $sdscprd, $ldscprd, $skuprd, $bcdprd, $stkprd, $typprd, $prcprd, '', '', $estprd)
-    ); 
+    );
 
     return getLastInserId();
 }
@@ -43,7 +74,7 @@ function updateProducto($dscprd, $sdscprd, $ldscprd, $skuprd, $bcdprd, $stkprd, 
 
     return ejecutarNonQuery(
       sprintf($sqlUpdate, $dscprd, $sdscprd, $ldscprd, $skuprd, $bcdprd, $stkprd, $typprd, $prcprd, $estprd, $codprd)
-    ); 
+    );
 }
 
 function setImageProducto($url, $codprd, $type="PRT")
@@ -69,3 +100,5 @@ function deleteProducto($codprd)
         sprintf($sqlDelete, $codprd)
     );
 }
+
+?>

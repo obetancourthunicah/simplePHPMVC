@@ -9,6 +9,12 @@ body, .menu, .contenido, .footer {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.center {
+  text-align: center;
+}
+.bold{
+  font-weight:bold;
+}
 .menu {
   position: fixed;
   width: 100%;
@@ -220,9 +226,10 @@ label {
 }
 .btn {
   display: inline-block;
-  padding: 0.25em 0.5em;
+  /*padding: 0.25em 0.5em;*/
   border-radius: 53px;
   color: #000;
+  text-decoration: none;
 }
 .btn:hover {
   background-color: #CCC;
@@ -507,12 +514,11 @@ input[type="number"], input[type="date"] {
   max-width: 115px !important;
   padding: 0.25em;
 }
+.card .center img{
+  margin: 1px auto;
+}
 .imagePrd {
   display: block;
   width: 100%;
   max-width: 480px !important;
-}
-
-.center{
-  text-align: center !important;
 }
