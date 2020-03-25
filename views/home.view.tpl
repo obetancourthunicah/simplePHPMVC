@@ -1,19 +1,11 @@
-<div class="heropanel">
-  <h1>
-    Simple PHP MVC Demo
-  </h1>
-
-  <a href="index.php?page=register" class="btn btn-primary">Crear Cuenta</a>
-</div>
-<section class="cards">
-  <div>
-    Artículo 1
-  </div>
-  <div>
-    Artículo 2
-  </div>
-  <div>
-    Artículo 3
-  </div>
+<section class="cards row">
+  {{foreach productos}}
+  <section class="card depth-1 col-4 col-sm-6 col-md-3">
+    <span class="col-sm-12 center">
+      {{if urlthbprd}}
+          <img src="{{urlthbprd}}" alt="{{skuprd}} {{dscprd}}" class="imgthumb center" />
+      {{endif urlthbprd}}
+    </span>
+  </section>
+  {{endfor productos}}
 </section>
-<link rel="stylesheet" href="public/css/hero.css" />

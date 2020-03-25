@@ -134,6 +134,21 @@ case "centro_de_costos":
       include_once "controllers/mantenimientos/centrocostos.control.php":
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
+case "productos":
+    ($logged) ?
+      include_once "controllers/mantenimientos/productos.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "producto":
+    ($logged) ?
+      include_once "controllers/mantenimientos/producto.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "productimg":
+    ($logged) ?
+      include_once "controllers/mantenimientos/productimg.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
 }
 
 addToContext("pageRequest", $pageRequest);

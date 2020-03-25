@@ -32,11 +32,18 @@ function run()
             "ionicon"=> "ios-cog"
         );
     }
-     if (isAuthorized('centros_de_costos', $usuario)) {
+    if (isAuthorized('centros_de_costos', $usuario)) {
         $arrMantenimientos[] = array(
             "page" => "centros_de_costos",
             "pageDsc"=>"Centro de Costos",
             "ionicon"=> "cash"
+        );
+    }
+    if (isAuthorized('productos', $usuario)) {
+        $arrMantenimientos[] = array(
+          "page" => "productos",
+          "pageDsc" => "Productos",
+          "ionicon" => "cube"
         );
     }
     $arrDataView["mantenimientos"] = $arrMantenimientos;
