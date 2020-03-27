@@ -9,7 +9,7 @@
  * @author   Luis Fernando Gomez Figueroa <lgomezf16@gmail.com>
  * @license  Comercial http://
  *
- * @version 1.0.0
+ * @version CVS: 1.0.0
  *
  * @link http://url.com
  */
@@ -59,6 +59,9 @@ case "rmvtocart":
     die();
 case "cartanon":
     include_once "controllers/retail/cartanon.control.php";
+    die();
+case "rmvallcart":
+    include_once "controllers/retail/rmvAllCart.control.php";
     die();
 
 }

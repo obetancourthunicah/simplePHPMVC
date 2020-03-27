@@ -4,8 +4,8 @@
  * PHP Version 7
  * Controlador de Controlador
  *
- * @category Controllers_RmvToCart
- * @package  Controllers\Controllers_RmvToCart
+ * @category Controllers_AddToCart
+ * @package  Controllers\Controllers_AddToCart
  * @author   Orlando J Betancourth <orlando.betancourth@gmail.com>
  * @license  Comercial http://
  *
@@ -23,23 +23,13 @@ require_once "models/mantenimientos/productos.model.php";
 function run()
 {
     $resultArray = array();
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["codprd"])) {
-        $codprd = intval($_GET["codprd"]);
-        $cantidad = 1;
-        $producto = obtenerUnProducto($codprd);
-        if (count($producto) <= 0) {
-              $resultArray["msg"] = "No se encontró producto";
-              header('Content-Type: application/json');
-              echo json_encode($resultArray);
-              die();
-        }
-        $precio = $producto["prcprd"];
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (mw_estaLogueado()) {
             // agregar a carretilla autenticada
-            $resultArray["msg"] = "Eliminando a Carretilla Autenticada";
+            $resultArray["msg"] = "Eliminando Carretilla Autenticada";
             $usuario = $_SESSION["userCode"];
-            rmvCartAuth($codprd, $usuario, $cantidad);
-            $resultArray["cartAmount"] = 1;// getCartProducts($usuario);
+            deleteCartAuth($usuario);
+            $resultArray["cartAmount"] = 1;
         } else {
             // agregar a carretilla no autenticada
             $cartAnonUniqueID = '';
@@ -50,9 +40,8 @@ function run()
                 $cartAnonUniqueID = time() . random_int(1000, 9999);
             }
             $_SESSION["cart_anon_uid"] = $cartAnonUniqueID;
-            $resultArray["msg"] = "Eliminado a Carretilla No Autenticada";
-            rmvCartAnon($codprd, $cartAnonUniqueID, $cantidad, $precio);
-            $resultArray["cartAmount"] = 1 ;//getCartProductsData($cartAnonUniqueID);
+            deleteCartUnAuth($cartAnonUniqueID);
+            $resultArray["cartAmount"] = 1 ;
         }
     } else {
         $resultArray["msg"] = "Esta tratando de hacer al incorrecto";
@@ -63,5 +52,3 @@ function run()
 }
 // Correr el controlador
 run();
-
-?>

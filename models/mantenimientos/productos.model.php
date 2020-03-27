@@ -27,6 +27,7 @@ require_once "libs/dao.php";
 function getAuthTimeDelta()
 {
     return 21600; // 6 * 60 * 60; // horas * minutos * segundo
+    // No puede ser mayor a 34 días
 }
 /**
  * Obtiene la Delta para Carretilla Anónima
@@ -36,6 +37,7 @@ function getAuthTimeDelta()
 function getUnAuthTimeDelta()
 {
     return 600 ;// 10 * 60; //h , m, s
+    // No puede ser mayor a 34 días
 }
 
 /**
@@ -693,5 +695,79 @@ function getAuthCartDetail($usuario)
     }
     $arrProductosFinal["total"] = number_format($arrProductosFinal["total"], 2);
     return $arrProductosFinal;
+}
+
+/**
+ * Borra la carretilla completa autenticada
+ *
+ * @param Integer $usuario Código de Usuario
+ *
+ * @return integer Registro Afectados
+ */
+function deleteCartAuth($usuario)
+{
+    $sqlDel = "DELETE from carretilla
+      where usercod=%d;";
+
+    return ejecutarNonQuery(
+        sprintf(
+            $sqlDel,
+            $usuario
+        )
+    );
+}
+
+/**
+ * Borra la carretilla completa no autenticada
+ *
+ * @param string $uniqueUser Usuario Anónimo
+ *
+ * @return integer Registros Afectados
+ */
+function deleteCartUnAuth($uniqueUser)
+{
+    $sqlDel = "DELETE from carretillaanon
+      where anoncod='%s';";
+
+    return ejecutarNonQuery(
+        sprintf(
+            $sqlDel,
+            $uniqueUser
+        )
+    );
+}
+
+/**
+ * Elimina los productos reservados fuera de tiempo
+ *
+ * @return void
+ */
+function cleanTimeOutCart()
+{
+    //
+    $contador = 0;
+    iniciarTransaccion();
+    //Borrando Carretilla Anonima
+    $sqlDel = "DELETE from carretillaanon
+      where TIME_TO_SEC(TIMEDIFF(now(), crrfching)) > %d";
+
+    $contador += ejecutarNonQuery(
+        sprintf(
+            $sqlDel,
+            getUnAuthTimeDelta()
+        )
+    );
+    // Borrando Carretilla Autenticada
+    $sqlDel = "DELETE from carretilla
+      where TIME_TO_SEC(TIMEDIFF(now(), crrfching)) > %d";
+
+    $contador += ejecutarNonQuery(
+        sprintf(
+            $sqlDel,
+            getAuthTimeDelta()
+        )
+    );
+    terminarTransaccion();
+    return $contador;
 }
 ?>

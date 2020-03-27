@@ -36,12 +36,21 @@
         </tbody>
         <tfooter>
           <tr style="border-top:1px solid #333;">
-            <td colspan="3" class="right"><strong>Total</strong></td>
+            <td colspan="2" class="center">
+              {{if totctd}}
+              <a class="btn m-padding bg-red center rmvcart" href="index.php?page=rmvallcart">
+                <span class="ion-trash-b s4"></span>&nbsp;Cancelar
+              </a>
+              {{endif totctd}}
+            </td>
+            <td class="right"><strong>Total</strong></td>
             <td class="right">{{totctd}}</td>
             <td></td>
             <td class="right">{{total}}</td>
             <td>
+              {{if totctd}}
               <a href="checkout" class="btn btn-primary m-padding">Pagar</a>
+              {{endif totctd}}
             </td>
           </tr>
         </tfooter>
@@ -52,7 +61,7 @@
 </section>
 <script>
   $().ready(function () {
-    $(".mdftocart").click(function (e) {
+    $(".mdftocart, .rmvcart").click(function (e) {
       e.preventDefault();
       e.stopPropagation();
       $.post(
