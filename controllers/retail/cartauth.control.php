@@ -1,10 +1,11 @@
 <?php
+
 /**
  * PHP Version 7
- * Controlador de Controlador
+ * Controlador de CartAuth
  *
- * @category Controllers_Home
- * @package  Controllers\Home
+ * @category Controllers_CartAuth
+ * @package  Controllers\CartAuth
  * @author   Orlando J Betancourth <orlando.betancourth@gmail.com>
  * @license  Comercial http://
  *
@@ -13,19 +14,20 @@
  * @link http://url.com
  */
  // Sección de requires
-
 require_once "models/mantenimientos/productos.model.php";
-
 /**
- * Corre el Controlador
+ * Corre el Controlador de cartauth
  *
  * @return void
  */
 function run()
 {
+    $usuario = $_SESSION["userCode"];
     $arrDataView = array();
-    $arrDataView["productos"] = productoCatalogo();
-    renderizar("home", $arrDataView);
+    $arrDataView = getAuthCartDetail($usuario);
+    renderizar("retail/cartauth", $arrDataView);
 }
+// Correr el controlador
 run();
+
 ?>

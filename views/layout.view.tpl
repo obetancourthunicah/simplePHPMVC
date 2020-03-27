@@ -17,6 +17,9 @@
           <div class="menu">
               <div class="brand"><a href="index.php?page=home">{{page_title}}</a></div>
               <ul>
+                  {{if cartEntries}}
+                  <li><a href="index.php?page=cartanon"><span class="ion-ios-cart"></span> <span id="cartcounter">{{cartEntries}}</span> </a></li>
+                  {{endif cartEntries}}
                   <li><a href="index.php?page=login">Iniciar Sesión</a></li>
                   <li><a href="index.php?page=register">Crear Cuenta</a></li>
               </ul>

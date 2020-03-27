@@ -24,6 +24,9 @@ if ($conexion->connect_errno ) {
 }
 
 $conexion->set_charset("utf8");
+
+// Establecer lo zona horaria de la conexion
+$conexion->query("SET time_zone = '-6:00'");
 /**
  * Obtener Registros
  *

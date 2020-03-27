@@ -27,7 +27,7 @@ if (isset($_GET["page"])) {
 //Siempre
 require_once "controllers/mw/verificar.mw.php";
 require_once "controllers/mw/site.mw.php";
-
+require_once "controllers/retail/mw/cart.mw.php";
 // aqui no se toca jajaja la funcion de este index es
 // llamar al controlador adecuado para manejar el
 // index.php?page=modulo
@@ -51,6 +51,16 @@ case "ficha":
 case 'register':
     include_once "controllers/security/register.control.php";
     die();
+case "addtocart":
+    include_once "controllers/retail/addtocart.control.php";
+    die();
+case "rmvtocart":
+    include_once "controllers/retail/rmvtocart.control.php";
+    die();
+case "cartanon":
+    include_once "controllers/retail/cartanon.control.php";
+    die();
+
 }
 
 
@@ -147,6 +157,11 @@ case "producto":
 case "productimg":
     ($logged) ?
       include_once "controllers/mantenimientos/productimg.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "cartauth":
+    ($logged) ?
+      include_once "controllers/retail/cartauth.control.php" :
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 }
