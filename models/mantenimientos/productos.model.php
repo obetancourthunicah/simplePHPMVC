@@ -94,7 +94,7 @@ function productoCatalogo()
     $timeDelta = getUnAuthTimeDelta(); // 10 * 60; //h , m, s
     $sqlSelectReserved = "select codprd, sum(crrctd) as reserved
     from carretillaanon where TIME_TO_SEC(TIMEDIFF(now(), crrfching)) <= %d
-    group by 1;
+    group by codprd;
     ";
     $arrReserved = obtenerRegistros(
         sprintf(
@@ -344,7 +344,7 @@ function deleteProducto($codprd)
 
 
 /*----------------------------------------------------------------
- Métodos para la Carretilla Anónima
+ Métodos para la Carretilla
 -----------------------------------------------------------------*/
 /**
  * Agregar un producto a la carretilla anonima
@@ -583,7 +583,7 @@ function passAnonCartToCart($uniqueUser, $user)
 {
     // Iniciamos Transacción para realizar varias sentencias
     // Y confirmar al final del Ciclo si no hay algun error
-    iniciarTransaccion();
+    iniciarTransaccion(); /// BEGIN
     $sqlins = "INSERT INTO `carretilla`
         (`usercod`, `codprd`, `crrctd`, `crrprc`, `crrfching`)
       SELECT %d as `usercodt`, `codprd` as codprdt,
@@ -608,7 +608,8 @@ function passAnonCartToCart($uniqueUser, $user)
             $uniqueUser
         )
     );
-    terminarTransaccion();
+    terminarTransaccion(); // COMMIT END
+    // terminarTransaccion(false); // ROLLBACK END
     return getCartProducts($user);
 }
 
