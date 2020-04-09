@@ -1,8 +1,8 @@
 <section>
   <header>
-      <h1><span class="ion-ios-cart s2"></span>&nbsp; Mi carretilla de Compra</h1>
+    <h1><span class="ion-card s2"></span>&nbsp; Pago con Paypal</h1>
   </header>
-  <br/>
+  <br />
   <section class="row">
     <section class="col-12 col-md-8 col-offset-2">
       <table class="full-width">
@@ -27,9 +27,11 @@
             <td class="right">{{crrprc}}</td>
             <td class="right">{{total}}</td>
             <td class="center">
-              <a href="index.php?page=rmvtocart&codprd={{codprd}}" class="btn s-padding mdftocart"><span class="ion-minus-circled"></span></a>
+              <a href="index.php?page=rmvtocart&codprd={{codprd}}" class="btn s-padding mdftocart">
+                <span class="ion-minus-circled"></span></a>
               &nbsp;
-              <a href="index.php?page=addtocart&codprd={{codprd}}" class="btn s-padding mdftocart"><span class="ion-plus-circled"></span></a>
+              <a href="index.php?page=addtocart&codprd={{codprd}}" class="btn s-padding mdftocart">
+                <span class="ion-plus-circled"></span></a>
             </td>
           </tr>
           {{endfor products}}
@@ -49,7 +51,11 @@
             <td class="right">{{total}}</td>
             <td>
               {{if totctd}}
-              <a href="index.php?page=checkout" class="btn btn-primary m-padding">Pagar</a>
+              <form action="index.php?page=checkout" method="post">
+                <button type="submit" name="btnSubmit" class="btn btn-primary m-padding">
+                  Pagar con Paypal
+                </button>
+              </form>
               {{endif totctd}}
             </td>
           </tr>

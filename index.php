@@ -167,6 +167,21 @@ case "cartauth":
       include_once "controllers/retail/cartauth.control.php" :
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
+case "checkout":
+    ($logged) ?
+      include_once "controllers/retail/paypal/checkout.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "checkoutapr":
+    ($logged) ?
+      include_once "controllers/retail/paypal/checkoutapproved.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "checkoutcnl":
+    ($logged) ?
+      include_once "controllers/retail/paypal/checkoutcancel.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
 }
 
 addToContext("pageRequest", $pageRequest);

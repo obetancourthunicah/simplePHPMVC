@@ -1,7 +1,26 @@
 <?php
+/**
+ * PHP Version 7
+ * Controlador de Paypal
+ *
+ * @category Controllers_Paypal
+ * @package  Controllers\Paypal
+ * @author   Orlando J Betancourth <orlando.betancourth@gmail.com>
+ * @license  Comercial http://
+ *
+ * @version CVS:1.0.0
+ *
+ * @link http://url.com
+ */
+ // Sección de requires
 require_once 'vendor/autoload.php';
 
-// die("<h1>Revisar el archivo libs/paypal.php</h1><h1>Comentar o eliminar linea 4 despues de agregar los datos de autenticación solicitados</h1><h2><a href=\"index.php?page=dashboard\">Regresar</a></h2>");
+die(
+    "<h1>Revisar el archivo libs/paypal.php</h1>
+    <h1>Comentar o eliminar linea 4 despues de agregar los datos
+    de autenticación solicitados</h1>
+    <h2><a href=\"index.php?page=dashboard\">Regresar</a></h2>"
+);
 /**
  * Retorna el Api Context de Paypal
  *
@@ -11,8 +30,8 @@ function getApiContext()
 {
     $apiContext = new \PayPal\Rest\ApiContext(
         new \PayPal\Auth\OAuthTokenCredential(
-            'AcPU-ZCed-DjyUtP8vM916FdGcwHrucBtbBaEXw5EU74HVshrHGf2g-ycpqRq7iwX3KbqbEbxgNi9h8M',     // ClientID
-            'EJq6q53BVrrobPEyPrCG_NqyF8vcwLMoPQJpczwxIu16_JKXH8ZEjkn7T3Ob19Y7wLu_3YQdKeSBu6jj'      // ClientSecret
+            "ClienteIdDePaypal",
+            "SecretDePaypal"
         )
     );
     return $apiContext;
