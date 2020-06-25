@@ -45,6 +45,9 @@ case "login":
 case "logout":
     include_once "controllers/security/logout.control.php";
     die();
+case "acerca":
+    include_once "controllers/acerca.control.php";
+    die();
 }
 
 //Este switch se encarga de todo el enrutamiento que ocupa login
@@ -94,6 +97,16 @@ case "programas":
 case "programa":
     ($logged)?
       include_once "controllers/security/programa.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "categorias":
+    ($logged)?
+      include_once "controllers/categorias.control.php":
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "categoria":
+    ($logged) ?
+      include_once "controllers/categoria.control.php" :
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
 }

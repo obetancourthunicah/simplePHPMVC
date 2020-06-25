@@ -3,25 +3,21 @@ body {
   font-size: 16px;
   margin: 0px;
   padding: 0px;
-  background-color: #f7f4ed;
+  background-color: #fff;
 }
-
 body, .menu, .contenido, .footer {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
-
 .menu {
   position: fixed;
   width: 100%;
   top: 0px;
   left: 0px;
-  background-color: #C8C2B2;
+  background-color: #1310bd;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, .8);
   z-index: 9999;
 }
-
 .menu .brand {
   display: inline-block;
   padding: 1em;
@@ -29,12 +25,10 @@ body, .menu, .contenido, .footer {
   width: 100%;
   color: white;
 }
-
 .menu .brand a {
   text-decoration: none;
   color: white;
 }
-
 .menu ul {
   list-style: none;
   padding: 0px;
@@ -44,17 +38,14 @@ body, .menu, .contenido, .footer {
   transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
   ;
 }
-
 .menu.open ul {
   max-height: 1000px;
   transition: max-height 1s ease-in-out;
 }
-
 .menu ul li {
   color: white;
   text-align: center;
 }
-
 .menu ul li a {
   box-sizing: border-box;
   display: inline-block;
@@ -64,11 +55,9 @@ body, .menu, .contenido, .footer {
   margin: 0px;
   width: 100%;
 }
-
 .menu ul li a:hover {
   background-color: rgba(245, 233, 233, .5);
 }
-
 .menu .hbtn {
   position: absolute;
   top: 0px;
@@ -83,7 +72,6 @@ body, .menu, .contenido, .footer {
   -webkit-user-select: none;
   user-select: none;
 }
-
 .menu .hbtn div {
   background-color: white;
   border-radius: 5px;
@@ -93,35 +81,28 @@ body, .menu, .contenido, .footer {
   transform-origin: 4px 0px;
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
 }
-
 .menu.open .hbtn div {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
 }
-
 .menu .hbtn div:nth-child(1) {
   transform-origin: 0% 0%;
 }
-
 .menu.open .hbtn div:nth-child(1) {
   transform: rotate(45deg) translate(0px, -8px);
   transform-origin: left center;
 }
-
 .menu .hbtn div:nth-child(3) {
   transform-origin: 0% 100%;
 }
-
 .menu.open .hbtn div:nth-child(3) {
   transform: rotate(-45deg) translate(0px, 7px);
   transform-origin: left center;
 }
-
 .menu.open .hbtn div:nth-child(2) {
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
-
 @media (min-width:568px) {
   .menu .brand {
     width: auto !important;
@@ -151,35 +132,30 @@ body, .menu, .contenido, .footer {
     display: none;
   }
 }
-
 .menu .title {
   font-size: 1.5em;
   text-shadow: 1px 1px 2px #8B7474;
   padding-left: 2em;
   padding-right: 2em;
 }
-
 .contenido {
   padding: 1em;
   margin-top: 51px;
   line-height: 1.5;
 }
-
 .blob {
   max-width: 920px;
   margin: 1em auto;
 }
-
 .footer {
   box-sizing: border-box;
   margin: 0px;
   text-align: center;
   padding: 0.5em;
-  background-color: #C8C2B2;
+  background-color: #1310bd;
   color: white;
   width: 100%;
 }
-
 pre {
   background-color: #333;
   color: #1A9626;
@@ -187,7 +163,6 @@ pre {
   border-radius: 3px;
   font-size: 0.8em;
 }
-
 .message {
   background-color: #8B6D6D;
   padding: 4em;
@@ -198,12 +173,10 @@ pre {
   margin: 150px auto;
   text-align: center;
 }
-
 label {
   font-weight: bold;
   padding-top: 0.5em;
 }
-
 @media screen and (min-width: 568px) {
   .col-sm-offset-1 {
     margin-left: 8.333333333%;
@@ -224,7 +197,6 @@ label {
     margin-left: 50%;
   }
 }
-
 @media screen and (min-width: 768px) {
   .col-offset-1 {
     margin-left: 8.333333333%;
@@ -245,29 +217,27 @@ label {
     margin-left: 50%;
   }
 }
-
 .btn {
   display: inline-block;
   padding: 0.25em 0.5em;
   border-radius: 53px;
   color: #000;
 }
-
 .btn:hover {
   background-color: #CCC;
 }
-
 .btn-primary {
-  background-color: #C8C2B2;
+  background-color: #22c22a;
   color: white;
 }
-
+.btn-primary:hover {
+  background-color: #066e0b;
+}
 @media screen and (max-width: 768px) {
   .sd-hide {
     display: none;
   }
 }
-
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -279,11 +249,9 @@ select {
   box-sizing: border-box;
   font: 400 16px 'Montserrat', 'Helvetica Neue', Helvetica, arial, sans-serif;
 }
-
 .select {
   position: relative;
 }
-
 .select::after {
   content: '\f123';
   font-family: "Ionicons";
@@ -300,10 +268,6 @@ select {
   top: 15px;
   pointer-events: none;
 }
-
-
-
-
 .dp-modal {
   position: fixed;
   top: 0;
@@ -312,7 +276,6 @@ select {
   bottom: 0;
   background: rgba(255, 255, 255, 0.75)
 }
-
 .dp {
   position: relative;
   background: #FFF;
@@ -324,7 +287,6 @@ select {
   padding-top: 6px;
   overflow: hidden
 }
-
 .dp:before {
   content: ' ';
   height: 6px;
@@ -335,39 +297,32 @@ select {
   background: #3b99fc;
   background: linear-gradient(-90deg, #3b99fc 0, #8aefc8 100%)
 }
-
 .dp-permanent .dp {
   padding-top: 0;
   border: 1px solid #EEE;
   box-shadow: none
 }
-
 .dp-permanent .dp:before {
   display: none
 }
-
 .dp-cal {
   min-height: 300px
 }
-
 .dp-below {
   position: absolute;
   font-size: .8em;
   width: 400px;
   max-width: 100vw
 }
-
 .dp-permanent {
   position: relative;
   font-size: .8em;
   width: 400px;
   max-width: 100vw
 }
-
 .dp-permanent .dp {
   z-index: 0
 }
-
 .dp-modal .dp {
   position: absolute;
   top: 50%;
@@ -377,18 +332,15 @@ select {
   transform: translate(-50%, -50%);
   animation: slide-up .3s forwards
 }
-
 .dp-months {
   padding: 24px
 }
-
 .dp-years {
   box-sizing: border-box;
   max-height: 400px;
   padding: 8px 0;
   overflow: auto !important
 }
-
 .dp-cal-month, .dp-cal-year, .dp-day, .dp-month, .dp-year {
   box-sizing: border-box;
   text-align: center;
@@ -397,14 +349,12 @@ select {
   color: #3b404d;
   border-radius: 2px
 }
-
 .dp-cal-header {
   position: relative;
   text-align: center;
   padding-bottom: 16px;
   background: #f5f5f5
 }
-
 .dp-next, .dp-prev {
   position: absolute;
   width: 30px;
@@ -414,20 +364,16 @@ select {
   color: #777;
   border-radius: 2px
 }
-
 .dp-next:focus, .dp-prev:focus, .dp-next:hover, .dp-prev:hover {
   outline: 0;
   color: inherit
 }
-
 .dp-prev {
   left: 24px
 }
-
 .dp-next {
   right: 24px
 }
-
 .dp-prev:before, .dp-next:before {
   content: '';
   border: 2px solid;
@@ -438,31 +384,26 @@ select {
   transition: border-color .2s;
   margin: 9px 0 40px 4px
 }
-
 .dp-prev:before {
   border-right: 0;
   border-bottom: 0
 }
-
 .dp-next:before {
   border-left: 0;
   border-top: 0;
   margin-left: 0;
   margin-right: 4px
 }
-
 .dp-cal-month, .dp-cal-year {
   display: inline-block;
   font-size: 1.4em;
   padding: 16px 8px 8px;
   outline: 0
 }
-
 .dp-cal-footer {
   text-align: center;
   background: #f5f5f5
 }
-
 .dp-day-today:after {
   content: '';
   height: 0;
@@ -474,7 +415,6 @@ select {
   top: 0;
   right: 0
 }
-
 .dp-close, .dp-clear, .dp-today {
   box-sizing: border-box;
   display: inline-block;
@@ -483,23 +423,19 @@ select {
   text-decoration: none;
   color: inherit
 }
-
 .dp-permanent .dp-close, .dp-permanent .dp-clear {
   display: none
 }
-
 .dp-close:hover, .dp-close:focus, .dp-clear:hover, .dp-clear:focus, .dp-today:hover, .dp-today:focus, .dp-next:hover, .dp-next:focus, .dp-prev:hover, .dp-prev:focus, .dp-cal-month:focus, .dp-cal-month:hover, .dp-cal-year:hover, .dp-cal-year:focus {
   background: #75bcfc;
   color: white
 }
-
 .dp-col-header, .dp-day {
   width: 14.28571429%;
   display: inline-block;
   padding: 8px;
   text-align: center
 }
-
 .dp-col-header {
   color: #AAA;
   text-transform: uppercase;
@@ -507,49 +443,40 @@ select {
   font-size: .8em;
   padding: 8px 0
 }
-
 .dp-month {
   width: 33%;
   display: inline-block;
   padding: 8px
 }
-
 .dp-year {
   display: block;
   padding: 8px 40px
 }
-
 .dp-edge-day {
   color: #AAA
 }
-
 .dp-day:hover, .dp-month:hover, .dp-year:hover, .dp-current:focus, .dp-current, .dp-day:focus, .dp-month:focus, .dp-year:focus {
   outline: 0;
   background: #75bcfc;
   color: white
 }
-
 .dp-selected:hover, .dp-selected:focus, .dp-selected {
   background: #3b99fc;
   color: #FFF
 }
-
 .dp-day-disabled {
   background: transparent;
   color: #DDD
 }
-
 .dp-day-disabled:focus, .dp-day-disabled:hover {
   background: #DDD
 }
-
 .dp-focuser {
   position: absolute;
   z-index: 0;
   top: 50%;
   left: 50%
 }
-
 @media(max-width:480px), (max-height:480px) {
   .dp-modal .dp {
     font-size: .9em;
@@ -560,7 +487,6 @@ select {
     padding: 8px
   }
 }
-
 @keyframes slide-up {
   0% {
     transform: translate(-50%, 100%)
@@ -569,7 +495,6 @@ select {
     transform: translate(-50%, -50%)
   }
 }
-
-input[type="number"], input[type="date"]{
+input[type="number"], input[type="date"] {
   text-align: right;
 }

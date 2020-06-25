@@ -17,6 +17,7 @@
           <div class="menu">
               <div class="brand"><a href="index.php?page=home">{{page_title}}</a></div>
               <ul>
+                  <li><a href="index.php?page=acerca">Acerca</a></li>
                   <li><a href="index.php?page=login">Iniciar Sesión</a></li>
               </ul>
               <div class="hbtn"> <div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div></div>
@@ -26,7 +27,7 @@
             </div>
 
             <div class="footer">
-                Derechos Reservados 2018
+                Derechos Reservados 2020
             </div>
             {{foreach js_ref}}
                 <script src="{{uri}}"></script>

@@ -33,7 +33,7 @@
             </div>
 
             <div class="footer">
-                Derechos Reservados 2018
+                Derechos Reservados 2020
             </div>
             {{foreach js_ref}}
                 <script src="{{uri}}"></script>
