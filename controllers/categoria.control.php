@@ -24,6 +24,13 @@ function run(){
     $arrDataView["catdsc"] = "";
     $arrDataView["catest"] = "ACT";
 
+    $arrDataView["catest_ACT"] = "select";
+    $arrDataView["catest_INA"] = "";
+
+    $arrDataView["readonly"] = "";
+
+    $arrDataView["isDeleting"] = false;
+
     if (isset($_GET["mode"])) {
         $arrDataView["mode"] = $_GET["mode"];
     }
@@ -36,6 +43,43 @@ function run(){
       DSP -> Visualizar
       DEL -> Eliminar
     */
+
+    if (isset($_POST["btnCancelar"])) {
+        header("location:index.php?page=categorias");
+        die;
+    }
+
+    if (isset($_POST["btnGuardar"])) {
+        $arrDataView["catdsc"] = $_POST["catdsc"];
+        $arrDataView["catest"] = $_POST["catest"];
+
+        switch ($arrDataView["mode"]) {
+        case "INS":
+            $newId = addNuevaCategoria($arrDataView["catdsc"], $arrDataView["catest"]);
+            if ($newId > 0) {
+                redirectWithMessage("Guardado de Forma Satisfactoria", "index.php?page=categorias");
+                die();
+            }
+            break;
+        case "UPD":
+            if (actualizarCategoria(
+                $arrDataView["catid"],
+                $arrDataView["catdsc"],
+                $arrDataView["catest"]
+            )
+            ) {
+                redirectWithMessage("Actualizado de Forma Satisfactoria", "index.php?page=categorias");
+                die();
+            }
+            break;
+        case "DEL":
+            if (eliminarCategoria($arrDataView["catid"])) {
+                redirectWithMessage("Eliminado de Forma Satisfactoria", "index.php?page=categorias");
+                die();
+            }
+            break;
+        }
+    }
 
     if (!(isset($arrModos[$arrDataView["mode"]]))) {
         redirectWithMessage("Error al Procesar Solicitud", "index.php?page=categorias");
@@ -52,6 +96,21 @@ function run(){
             $arrDataView["catid"] = $tmpCategoria["catid"];
             $arrDataView["catdsc"] = $tmpCategoria["catdsc"];
             $arrDataView["catest"] = $tmpCategoria["catest"];
+
+            if ($arrDataView["catest"] == "ACT") {
+                $arrDataView["catest_ACT"] = "selected";
+                $arrDataView["catest_INA"] = "";
+            } else {
+                $arrDataView["catest_ACT"] = "";
+                $arrDataView["catest_INA"] = "selected";
+            }
+            if ($arrDataView["mode"] == "DEL" || $arrDataView["mode"] == "DSP") {
+                $arrDataView["readonly"] = "disabled readonly";
+                if ($arrDataView["mode"] == "DEL") {
+                    $arrDataView["isDeleting"] = true;
+                }
+            }
+            
 
             $arrDataView["modedsc"] = sprintf(
                 $arrModos[$arrDataView["mode"]],
