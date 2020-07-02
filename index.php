@@ -109,6 +109,16 @@ case "categoria":
       include_once "controllers/categoria.control.php" :
       mw_redirectToLogin($_SERVER["QUERY_STRING"]);
     die();
+case "almacenes":
+    ($logged) ?
+      include_once "controllers/almacenes.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
+case "almacen":
+    ($logged) ?
+      include_once "controllers/almacen.control.php" :
+      mw_redirectToLogin($_SERVER["QUERY_STRING"]);
+    die();
 }
 
 addToContext("pageRequest", $pageRequest);
