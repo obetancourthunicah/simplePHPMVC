@@ -4,6 +4,7 @@
 <section class="row">
 <form action="index.php?page=categoria&mode={{mode}}&catid={{catid}}" method="post"
   class="col-offset-2 col-8">
+  <input type="hidden" name="xssref" value="{{xssref}}" />
   <fieldset>
     <section class="row">
       <label class="col-4" for="catid">Código</label>

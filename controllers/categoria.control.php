@@ -26,7 +26,7 @@ function run(){
 
     $arrDataView["catest_ACT"] = "select";
     $arrDataView["catest_INA"] = "";
-
+    $arrDataView["xssref"] = "";
     $arrDataView["readonly"] = "";
 
     $arrDataView["isDeleting"] = false;
@@ -50,9 +50,23 @@ function run(){
     }
 
     if (isset($_POST["btnGuardar"])) {
-        $arrDataView["catdsc"] = $_POST["catdsc"];
-        $arrDataView["catest"] = $_POST["catest"];
 
+        // $arrDataView["catdsc"] = $_POST["catdsc"];
+        // $arrDataView["catest"] = $_POST["catest"];
+        // $arrDataView["xssref"] = $_POST["xssref"];
+
+        mergeFullArrayTo($_POST, $arrDataView);
+
+        if (
+            !(isset($_SESSION["categoria_xssref"]) &&
+                $arrDataView["xssref"] == $_SESSION["categoria_xssref"] 
+              )
+        ){
+            unset($_SESSION["categoria_xssref"]);
+            redirectWithMessage("Algo salió mal", "index.php?page=categoria");
+            die();
+
+        }
         switch ($arrDataView["mode"]) {
         case "INS":
             $newId = addNuevaCategoria($arrDataView["catdsc"], $arrDataView["catest"]);
@@ -93,9 +107,11 @@ function run(){
                 redirectWithMessage("Error al Procesar Solicitud", "index.php?page=categorias");
                 die();
             }
-            $arrDataView["catid"] = $tmpCategoria["catid"];
-            $arrDataView["catdsc"] = $tmpCategoria["catdsc"];
-            $arrDataView["catest"] = $tmpCategoria["catest"];
+            // $arrDataView["catid"] = $tmpCategoria["catid"];
+            // $arrDataView["catdsc"] = $tmpCategoria["catdsc"];
+            // $arrDataView["catest"] = $tmpCategoria["catest"];
+
+            mergeFullArrayTo($tmpCategoria, $arrDataView);
 
             if ($arrDataView["catest"] == "ACT") {
                 $arrDataView["catest_ACT"] = "selected";
@@ -119,6 +135,9 @@ function run(){
             );
         }
     }
+    $time = time();
+    $arrDataView["xssref"] = crypt(($time % 2 == 0) ? $time. "c4t3gori4": "c4t3gori4" . $time, "algo");
+    $_SESSION["categoria_xssref"] = $arrDataView["xssref"];
     renderizar("categoria", $arrDataView);
 }
 

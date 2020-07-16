@@ -8,6 +8,7 @@
             <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
             <link rel="stylesheet" href="public/css/papier.css" />
             <link rel="stylesheet" href="public/css/estilo.css" />
+            
             <script src="public/js/jquery.min.js"></script>
             {{foreach css_ref}}
                 <link rel="stylesheet" href="{{uri}}" />
@@ -18,6 +19,7 @@
               <div class="brand"><a href="index.php?page=home">{{page_title}}</a></div>
               <ul>
                   <li><a href="index.php?page=acerca">Acerca</a></li>
+                  <li><a href="index.php?page=productos">Productos</a></li>
                   <li><a href="index.php?page=login">Iniciar Sesión</a></li>
               </ul>
               <div class="hbtn"> <div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div></div>
